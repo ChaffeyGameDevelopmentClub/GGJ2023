@@ -15,7 +15,6 @@ var seed_planter := SeedPlanter.new()
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect("on_killed", self, "_on_player_killed")
-
 	var model = PlatformTreeSeed.new()
 	seed_planter.set_seed_model(model)
 
@@ -29,7 +28,8 @@ func _on_player_killed() -> void:
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_T:
-			lower_health(10)
+			seed_planter.seed_power.lower_value(1)
+			#lower_health(10)
 
 func _process(delta):
 	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
