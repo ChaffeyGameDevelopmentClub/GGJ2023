@@ -1,4 +1,4 @@
-extends KinematicBody2D
+extends LivingObject
 
 
 # Declare member variables here. Examples:

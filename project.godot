@@ -8,6 +8,16 @@
 
 config_version=4
 
+_global_script_classes=[ {
+"base": "KinematicBody2D",
+"class": "LivingObject",
+"language": "GDScript",
+"path": "res://Assets/scripts/LivingObject.gd"
+} ]
+_global_script_class_icons={
+"LivingObject": ""
+}
+
 [application]
 
 config/name="GGJ2023"
