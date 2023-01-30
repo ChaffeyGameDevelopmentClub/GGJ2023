@@ -24,7 +24,7 @@ func _ready():
 
 # Returns whether or not this object has run out of health and has died.
 func is_dead() -> bool:
-    return has_died || health <= max_health
+    return has_died || health <= 0
 
 # Returns the current health of this object.
 func get_health() -> int:
