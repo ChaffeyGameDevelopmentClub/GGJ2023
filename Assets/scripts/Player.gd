@@ -12,12 +12,18 @@ var _input_vector = Vector2.ZERO
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	connect("on_killed", self, "on_player_killed")
+
+# Called when the player is killed.	
+func on_player_killed():
+	print("Game OVER!")
 
 #handle input events
 func _input(event):
-	pass
-	
+	if event is InputEventKey and event.pressed:
+		if event.scancode == KEY_T:
+			lower_health(10)
+
 func _process(delta):
 	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	_input_vector = _input_vector.normalized()
@@ -28,4 +34,3 @@ func _physics_process(delta):
 	_velocity += G
 	_velocity += _input_vector*speed
 	move_and_slide(_velocity, Vector2.UP)
-	

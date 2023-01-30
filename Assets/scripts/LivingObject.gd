@@ -10,6 +10,7 @@ export var can_exceed_max_health := false
 
 var health := 0
 var has_died := false
+var initialized := false
 
 # Called when this object runs out of health and is killed.
 signal on_killed()
@@ -20,6 +21,7 @@ signal on_health_changed(old_health, new_health)
 
 func _ready():
     set_health(max_health)
+    initialized = true
 
 
 # Returns whether or not this object has run out of health and has died.
@@ -45,9 +47,9 @@ func lower_health(amount : int) -> int:
 func set_health(new_health : int) -> int:
     
     # exit function if we're already dead.
-    if is_dead():
+    if initialized and is_dead():
         return health
-
+        
     # make sure data is valid.
     if new_health < 0:
         new_health = 0
@@ -58,11 +60,12 @@ func set_health(new_health : int) -> int:
     var old_health = health
     health = new_health
     emit_signal("on_health_changed", old_health, health)
-    print("Health for object \"%s\" has been set to %s", name, health)
+    print("Health for \"%s\" has been set to %s" % [name, health])
 
     # check if dead.
     if is_dead():
         has_died = true
+        print("\"%s\" has died" % name)
         emit_signal("on_killed")        
 
     return health
