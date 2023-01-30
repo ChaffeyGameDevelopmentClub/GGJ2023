@@ -14,3 +14,4 @@ func get_seed_model() -> SeedModel:
 # Sets the seed model to a new seed model.
 func set_seed_model(new_seed_model : SeedModel) -> void:
 	_seed_model = new_seed_model
+	print("Seed Model set to %s" % _seed_model.seed_name)

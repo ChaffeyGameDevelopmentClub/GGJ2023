@@ -14,14 +14,14 @@ var seed_planter := SeedPlanter.new()
 func _ready():
 	connect("on_killed", self, "_on_player_killed")
 
-	# need help with this.
-	# var seed_model = get_node("SeedModel") as SeedModel
-	# seed_planter.set_seed_model(seed_model)
+	var model = PlatformTreeSeed.new()
+	seed_planter.set_seed_model(model)
 
 
 # Called when the player is killed.	
 func _on_player_killed() -> void:
 	print("Game OVER!")
+	
 
 #handle input events
 func _input(event):
