@@ -9,13 +9,43 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "SeedModel",
+"class": "BouncyFlowerSeed",
+"language": "GDScript",
+"path": "res://Assets/scripts/Seed Models/BouncyFlowerSeed.gd"
+}, {
 "base": "KinematicBody2D",
 "class": "LivingObject",
 "language": "GDScript",
 "path": "res://Assets/scripts/LivingObject.gd"
+}, {
+"base": "SeedModel",
+"class": "PlatformTreeSeed",
+"language": "GDScript",
+"path": "res://Assets/scripts/Seed Models/PlatformTreeSeed.gd"
+}, {
+"base": "LivingObject",
+"class": "Player",
+"language": "GDScript",
+"path": "res://Assets/scripts/Player.gd"
+}, {
+"base": "Node",
+"class": "SeedModel",
+"language": "GDScript",
+"path": "res://Assets/scripts/Seed Models/SeedModel.gd"
+}, {
+"base": "Object",
+"class": "SeedPlanter",
+"language": "GDScript",
+"path": "res://Assets/scripts/SeedPlanter.gd"
 } ]
 _global_script_class_icons={
-"LivingObject": ""
+"BouncyFlowerSeed": "",
+"LivingObject": "",
+"PlatformTreeSeed": "",
+"Player": "",
+"SeedModel": "",
+"SeedPlanter": ""
 }
 
 [application]
