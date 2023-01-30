@@ -8,8 +8,13 @@ export var max_health := 100
 # Can the health exceed max health, for example if the player drinks a health potion?
 export var can_exceed_max_health := false
 
+# A clamped integer that holds the current health. To get/set values, use the functions in LivingObject.
 var health : ClampedInteger
+
+# Represents whether this object has died or not. Use is_dead() instead.
 var _has_died := false
+
+# Tracks whether or not this object has finished initializing. Do not use this.
 var _is_initialized := false
 
 # Called when this object runs out of health and is killed.
