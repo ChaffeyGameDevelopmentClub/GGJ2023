@@ -5,6 +5,8 @@ class_name BouncyFlowerSeed
 
 func _init():
 	seed_name = "Bouncy Flower"
+	plant_asset_path = "" # todo
 
-func _on_seed_planted() -> void:
+func _on_seed_planted(spawned_plant : Node) -> void:
 	print("Planted %s seed" % seed_name)
+	

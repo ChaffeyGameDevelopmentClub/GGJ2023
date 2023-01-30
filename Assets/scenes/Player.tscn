@@ -17,6 +17,7 @@ radius = 32.0
 height = 0.0
 
 [node name="Player" instance=ExtResource( 3 )]
+position = Vector2( 0, -32 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
