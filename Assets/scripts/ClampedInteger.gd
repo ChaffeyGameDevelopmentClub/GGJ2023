@@ -1,4 +1,5 @@
 extends Object
+class_name ClampedInteger
 
 var _max_value := 0
 var _min_value := 0

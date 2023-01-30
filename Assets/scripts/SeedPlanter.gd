@@ -1,6 +1,7 @@
 extends Object
 class_name SeedPlanter
 
+# switch this to a ClampedInteger
 export var max_seed_power := 3
 var _seed_power := 0
 var _seed_model : SeedModel

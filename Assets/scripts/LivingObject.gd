@@ -8,6 +8,7 @@ export var max_health := 100
 # Can the _health exceed max _health, for example if the player drinks a _health potion?
 export var can_exceed_max_health := false
 
+# switch this to a ClampedInteger
 var _health := 0
 var _has_died := false
 var _is_initialized := false
