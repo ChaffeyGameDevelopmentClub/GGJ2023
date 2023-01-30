@@ -9,12 +9,13 @@ export var speed := 300.0
 var _velocity := Vector2.ZERO
 var _input_vector = Vector2.ZERO
 
-var seed_planter := SeedPlanter.new()
+var seed_planter : SeedPlanter
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	connect("on_killed", self, "_on_player_killed")
+	seed_planter = get_node("SeedPlanter")
 	var model = PlatformTreeSeed.new()
 	seed_planter.set_seed_model(model)
 
@@ -28,7 +29,7 @@ func _on_player_killed() -> void:
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_T:
-			seed_planter.seed_power.lower_value(1)
+			seed_planter.plant_seed()
 			#lower_health(10)
 
 func _process(delta):

@@ -1,6 +1,6 @@
 # Controls all functionality related to planting seeds.
 
-extends Object
+extends Node
 class_name SeedPlanter
 
 # The maximum seed power we can have.
@@ -16,7 +16,7 @@ var _seed_model : SeedModel
 signal on_seed_power_depleted()
 
 # Called when the node enters the scene tree for the first time.
-func _init():
+func _ready():
 	seed_power = ClampedInteger.new(0, _max_seed_power)
 	seed_power.connect("on_value_changed", self, "_check_for_depletion")
 	seed_power.set_value(_max_seed_power)
@@ -33,9 +33,18 @@ func set_seed_model(new_seed_model : SeedModel) -> void:
 
 # Plant this seed.
 func plant_seed():
+
+	# Exit if we can't plant a seed.
+	if not can_plant_seed():
+		return
+
+	seed_power.lower_value(_seed_model.seed_power_cost)
 	_seed_model._on_seed_planted()
 
-func _check_for_depletion(old_value, new_value):
+func can_plant_seed() -> bool:
+	return _seed_model.seed_power_cost <= seed_power.get_value()
+
+func _check_for_depletion(_old_value, _new_value):
 	if seed_power.get_value() == seed_power._min_value:
 		print("Seed power depleted!")
 		emit_signal("on_seed_power_depleted")
