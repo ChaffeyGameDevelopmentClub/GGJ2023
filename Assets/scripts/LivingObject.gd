@@ -1,3 +1,5 @@
+# Represents a living object that has health, can take damage, and can die.
+
 extends KinematicBody2D
 
 class_name LivingObject

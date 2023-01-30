@@ -1,3 +1,5 @@
+# Represents the Player object.
+
 extends LivingObject
 class_name Player
 

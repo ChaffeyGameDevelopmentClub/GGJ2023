@@ -1,9 +1,16 @@
+# Controls all functionality related to planting seeds.
+
 extends Object
 class_name SeedPlanter
 
-# switch this to a ClampedInteger
+# The maximum seed power we can have.
 export var max_seed_power := 3
+
+# switch this to a ClampedInteger
+# Our current seed power. Do not get/set this directly.
 var _seed_power := 0
+
+# The current seed model used in this planter. When a seed is planted it will be this type. Do not get/set it directly.
 var _seed_model : SeedModel
 
 # Called when the node enters the scene tree for the first time.
