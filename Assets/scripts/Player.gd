@@ -21,7 +21,7 @@ func _ready():
 # Called when the player is killed.	
 func _on_player_killed() -> void:
 	print("Game OVER!")
-	
+
 
 #handle input events
 func _input(event):
