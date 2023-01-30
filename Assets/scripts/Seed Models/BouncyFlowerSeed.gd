@@ -7,5 +7,4 @@ func _init():
 	seed_name = "Bouncy Flower"
 
 func _on_seed_planted() -> void:
-	# implement here
-	pass
+	print("Planted %s seed" % seed_name)

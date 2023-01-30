@@ -7,5 +7,4 @@ func _init():
 	seed_name = "Platform Tree"
 
 func _on_seed_planted() -> void:
-	# implement here
-	pass
+	print("Planted %s seed" % seed_name)

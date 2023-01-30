@@ -28,23 +28,28 @@ func get_seed_model() -> SeedModel:
 
 # Sets the seed model to a new seed model.
 func set_seed_model(new_seed_model : SeedModel) -> void:
+	if _seed_model != null && new_seed_model.seed_name == _seed_model.seed_name:
+		return # Exit if the seed models are the same type.
+
 	_seed_model = new_seed_model
 	print("Seed Model set to %s" % _seed_model.seed_name)
 
-# Plant this seed.
-func plant_seed():
-
-	# Exit if we can't plant a seed.
-	if not can_plant_seed():
-		return
-
-	seed_power.lower_value(_seed_model.seed_power_cost)
-	_seed_model._on_seed_planted()
-
+# Returns whether or not we have enough seed power to plant the current seed model.
 func can_plant_seed() -> bool:
 	return _seed_model.seed_power_cost <= seed_power.get_value()
 
+# Checks for depletion. Do not use.
 func _check_for_depletion(_old_value, _new_value):
-	if seed_power.get_value() == seed_power._min_value:
-		print("Seed power depleted!")
-		emit_signal("on_seed_power_depleted")
+	if seed_power.get_value() != seed_power._min_value:
+		return # Exit function if we still have seed power.
+
+	print("Seed power depleted!")
+	emit_signal("on_seed_power_depleted")
+
+# Plant this seed.
+func plant_seed():
+	if not can_plant_seed():
+		return # Exit if we can't plant a seed.
+
+	_seed_model._on_seed_planted()
+	seed_power.lower_value(_seed_model.seed_power_cost)
