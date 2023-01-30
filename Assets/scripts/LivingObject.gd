@@ -24,7 +24,7 @@ func _ready():
 
 # Returns whether or not this object has run out of health and has died.
 func is_dead() -> bool:
-    return has_died || health <= 0
+    return has_died or health <= 0
 
 # Returns the current health of this object.
 func get_health() -> int:
@@ -51,7 +51,7 @@ func set_health(new_health : int) -> int:
     # make sure data is valid.
     if new_health < 0:
         new_health = 0
-    elif !can_exceed_max_health && new_health > max_health:
+    elif not can_exceed_max_health and new_health > max_health:
         new_health = max_health
 
     # change health and fire signal.
