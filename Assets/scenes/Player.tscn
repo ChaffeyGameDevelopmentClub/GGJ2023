@@ -14,7 +14,7 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 8, 8 )
+extents = Vector2( 7.68339, 7.87252 )
 
 [node name="Player" instance=ExtResource( 3 )]
 position = Vector2( 0, -8 )
@@ -24,9 +24,9 @@ __meta__ = {
 }
 gravity = 9
 speed = 300.0
-fallMultiplier = 7
+fallMultiplier = 1
 lowJumpMultiplier = 10
-jumpVelocity = 400
+jumpVelocity = 200
 jump_vector = Vector2( 0, -300 )
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
@@ -37,6 +37,7 @@ scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" parent="." index="2"]
+position = Vector2( 0, 0.130858 )
 shape = SubResource( 2 )
 
 [node name="SeedPlanter" type="Node" parent="." index="3"]

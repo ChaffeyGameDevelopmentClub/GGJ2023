@@ -13,6 +13,7 @@ var _velocity := Vector2.ZERO
 var _input_vector = Vector2.ZERO
 var seed_planter : SeedPlanter
 var last_collision : KinematicCollision2D
+#True when you can plant seed
 var can_plant_seed := false
 
 # Called when the node enters the scene tree for the first time.
@@ -30,7 +31,7 @@ func _on_player_killed() -> void:
 #handle input events
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_T:
+		if event.scancode == KEY_T and can_plant_seed:
 			seed_planter.plant_seed()
 			#lower_health(10)
 
@@ -45,15 +46,25 @@ func _process(_delta):
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_accept"):
 			_velocity = Vector2.UP * jumpVelocity
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	_velocity.x = 0
 	_velocity.x += _input_vector.x*speed
 	_velocity = move_and_slide(_velocity, Vector2(0,-1))
 
+	_check_ground_to_plant()
+
+#Check the ground if we can plant a seed
+func _check_ground_to_plant() -> void:
 	last_collision = get_last_slide_collision()
 	
 	if last_collision != null:
-		var collider = last_collision.collider
-		if collider is TileMap:
-			pass
+		if last_collision.collider is TileMap:
+			can_plant_seed = (last_collision.collider.get_tile_id(last_collision.position) == 0 and is_on_floor())		
+			return #If we can, we return from here
+	
+	#Otherwise, we can't plant a seed
+	can_plant_seed = false
+
+
