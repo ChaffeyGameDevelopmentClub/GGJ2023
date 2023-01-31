@@ -10,6 +10,7 @@ var _velocity := Vector2.ZERO
 var _input_vector = Vector2.ZERO
 var seed_planter : SeedPlanter
 var last_collision : KinematicCollision2D
+#True when you can plant seed
 var can_plant_seed := false
 
 # Called when the node enters the scene tree for the first time.
@@ -47,6 +48,5 @@ func _physics_process(_delta):
 	last_collision = get_last_slide_collision()
 	
 	if last_collision != null:
-		var collider = last_collision.collider
-		if collider is TileMap:
-			pass
+		if last_collision.collider is TileMap:
+			can_plant_seed = (last_collision.collider.get_tile_id(last_collision.position) == 0 and is_on_floor())				

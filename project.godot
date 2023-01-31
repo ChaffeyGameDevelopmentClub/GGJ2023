@@ -57,6 +57,7 @@ _global_script_class_icons={
 [application]
 
 config/name="GGJ2023"
+run/main_scene="res://Assets/scenes/levels/DebugLevel.tscn"
 config/icon="res://Assets/Textures/icon.png"
 
 [autoload]
