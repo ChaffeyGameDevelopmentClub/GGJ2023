@@ -22,7 +22,11 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
+gravity = 9
 speed = 300.0
+fallMultiplier = 7
+lowJumpMultiplier = 10
+jumpVelocity = 400
 jump_vector = Vector2( 0, -300 )
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
