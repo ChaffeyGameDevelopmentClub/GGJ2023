@@ -34,11 +34,6 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Assets/scripts/Seed Models/PlatformTreeSeed.gd"
 }, {
-"base": "LivingObject",
-"class": "Player",
-"language": "GDScript",
-"path": "res://Assets/scripts/Player.gd"
-}, {
 "base": "Object",
 "class": "SeedModel",
 "language": "GDScript",
@@ -55,7 +50,6 @@ _global_script_class_icons={
 "LevelBase": "",
 "LivingObject": "",
 "PlatformTreeSeed": "",
-"Player": "",
 "SeedModel": "",
 "SeedPlanter": ""
 }
@@ -63,8 +57,11 @@ _global_script_class_icons={
 [application]
 
 config/name="GGJ2023"
-run/main_scene="res://Assets/scenes/levels/Debug.tscn"
 config/icon="res://Assets/Textures/icon.png"
+
+[autoload]
+
+Player="*res://Assets/scenes/Player.tscn"
 
 [display]
 

@@ -1,7 +1,6 @@
 # Represents the Player object.
 
 extends LivingObject
-class_name Player
 
 # Declare member variables here. 
 const G := Vector2(0, 9.8)
@@ -50,4 +49,4 @@ func _physics_process(_delta):
 	if last_collision != null:
 		var collider = last_collision.collider
 		if collider is TileMap:
-			print(collider.get_tile_name(last_collision.position))
+			pass

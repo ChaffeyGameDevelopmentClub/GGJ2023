@@ -1,6 +1,12 @@
+"""
+Levels should be an inherited scene of the LevelBase scene.
+"""
+
 extends Node2D
 class_name LevelBase
 
+export var level_name := ""
+export var start_on_load := false
 var start_time := 0.0
 var level_state = LevelState.NotStarted
 
@@ -21,6 +27,8 @@ signal on_level_completed
 
 func _ready():
 	self.connect("on_level_started", self, "_on_level_started")
+	if start_on_load:
+		start_level()
 
 #Start the level
 func start_level():
@@ -29,15 +37,17 @@ func start_level():
 #Get time elapsed from the start of the level
 func get_time_elapsed() -> float:
 	if level_state == LevelState.Started:
-		return OS.get_ticks_msec() - start_time
+		return OS.get_system_time_msecs() - start_time
 	else: 
 		return 0.0
 
 #Function that executes whenever the level is started
 func _on_level_started():
-	start_time = OS.get_ticks_msec
+	Player.position = starting_point.position
+	start_time = OS.get_system_time_msecs()
 
 #When the player enters the ending point, the level is completed
 func _on_Area2D_body_entered(body:Node):
-	#if body is Player
-	emit_signal("on_level_completed")
+	if body == Player:
+		emit_signal("on_level_completed")
+		print("level %s completed"  % level_name)
