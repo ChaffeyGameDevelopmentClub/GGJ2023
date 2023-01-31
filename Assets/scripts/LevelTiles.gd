@@ -16,6 +16,6 @@ func get_tile_id(pos : Vector2) -> int:
 	return get_cellv(pos)
 
 #returns the name of a tile at a given position
-func get_tile_name(pos : Vector2) -> int:
+func get_tile_name(pos : Vector2) -> String:
 	pos = world_to_map(pos)
 	return tile_dict[get_cellv(pos)]
