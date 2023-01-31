@@ -1,0 +1,28 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/scripts/LevelTiles.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Textures/grass/tileset_grass.tres" type="TileSet" id=2]
+
+[node name="Level" type="Node2D"]
+
+[node name="StartingPoint" type="Position2D" parent="."]
+
+[node name="EndingPoint" type="Position2D" parent="."]
+
+[node name="Area2D" type="Area2D" parent="EndingPoint"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EndingPoint/Area2D"]
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+
+[node name="Tiles" type="Node2D" parent="."]
+
+[node name="CollisionTiles" type="TileMap" parent="Tiles"]
+tile_set = ExtResource( 2 )
+cell_size = Vector2( 16, 16 )
+show_collision = true
+format = 1
+script = ExtResource( 1 )
+
+[node name="BackgroundTiles" type="TileMap" parent="Tiles"]
+format = 1
