@@ -22,9 +22,9 @@ script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
 }
-gravity = 8
+gravity = 9
 speed = 300.0
-fallMultiplier = 2
+fallMultiplier = 7
 lowJumpMultiplier = 10
 jumpVelocity = 400
 jump_vector = Vector2( 0, -300 )

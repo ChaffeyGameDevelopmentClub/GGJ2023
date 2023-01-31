@@ -10,10 +10,9 @@
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 192, 88 )
 z_index = 1
-gravity = 2
-fallMultiplier = 10
-lowJumpMultiplier = 100
-jumpVelocity = 400
+fallMultiplier = 2
+lowJumpMultiplier = 30
+jumpVelocity = 300
 jump_vector = Vector2( 0, -500 )
 
 [node name="SeedPlanter" type="Node" parent="Player"]
