@@ -42,3 +42,4 @@ func _physics_process(_delta):
 	_velocity.x += _input_vector.x*speed
 	_velocity += G
 	_velocity = move_and_slide(_velocity, Vector2.UP)
+	

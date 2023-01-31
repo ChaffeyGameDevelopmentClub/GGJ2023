@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Assets/Textures/Growing_Tree2.png" type="Texture" id=1]
 
-[node name="PlatformTree" type="Sprite"]
+[node name="Tree" type="Sprite"]
 position = Vector2( 23, -96 )
 scale = Vector2( 3, 3 )
 texture = ExtResource( 1 )
