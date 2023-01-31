@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/scripts/Player.gd" type="Script" id=1]
-[ext_resource path="res://Assets/icon.png" type="Texture" id=2]
+[ext_resource path="res://Assets/Textures/icon.png" type="Texture" id=2]
 [ext_resource path="res://Assets/scenes/LivingObject.tscn" type="PackedScene" id=3]
 
 [sub_resource type="SpriteFrames" id=1]
@@ -13,10 +13,10 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 32, 32 )
+extents = Vector2( 8, 8 )
 
 [node name="Player" instance=ExtResource( 3 )]
-position = Vector2( 0, -32 )
+position = Vector2( 0, -8 )
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
@@ -25,6 +25,7 @@ speed = 300.0
 jump_vector = Vector2( 0, -300 )
 
 [node name="AnimatedSprite" parent="." index="0"]
+scale = Vector2( 0.25, 0.25 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" parent="." index="1"]

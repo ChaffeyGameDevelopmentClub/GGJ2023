@@ -10,6 +10,8 @@ export var jump_vector := Vector2(0, -300)
 var _velocity := Vector2.ZERO
 var _input_vector = Vector2.ZERO
 var seed_planter : SeedPlanter
+var last_collision : KinematicCollision2D
+var can_plant_seed := false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,3 +44,10 @@ func _physics_process(_delta):
 	_velocity.x += _input_vector.x*speed
 	_velocity += G
 	_velocity = move_and_slide(_velocity, Vector2.UP)
+
+	last_collision = get_last_slide_collision()
+	
+	if last_collision != null:
+		var collider = last_collision.collider
+		if collider is TileMap:
+			print(collider.get_tile_name(last_collision.position))
