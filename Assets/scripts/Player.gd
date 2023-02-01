@@ -12,7 +12,8 @@ export var jump_vector := Vector2(0, -300)
 var _velocity := Vector2.ZERO
 var _input_vector = Vector2.ZERO
 var seed_planter : SeedPlanter
-var last_collision : KinematicCollision2D
+var _last_collision : KinematicCollision2D
+var _collision : KinematicCollision2D
 #True when you can plant seed
 var can_plant_seed := false
 
@@ -53,18 +54,24 @@ func _physics_process(_delta):
 	_velocity.x += _input_vector.x*speed
 	_velocity = move_and_slide(_velocity, Vector2(0,-1))
 
-	_check_ground_to_plant()
+	for i in get_slide_count():
+		_collision = get_slide_collision(i)
+		_check_ground_to_plant(_collision)
+		lower_health(_check_block_damage(_collision))
 
 #Check the ground if we can plant a seed
-func _check_ground_to_plant() -> void:
-	last_collision = get_last_slide_collision()
-	
-	if last_collision != null:
-		if last_collision.collider is TileMap:
-			can_plant_seed = (last_collision.collider.get_tile_id(last_collision.position) == 0 and is_on_floor())		
-			return #If we can, we return from here
-	
-	#Otherwise, we can't plant a seed
+func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
+	if collision != null:
+		if collision.collider is CollisionTile:
+			can_plant_seed = (collision.collider.get_tile_id(collision.position) == 0 and is_on_floor())
+			return
 	can_plant_seed = false
 
+#Checks the damage of the given block that was collided with, and returns it
+func _check_block_damage(collision : KinematicCollision2D) -> int:
+	var damage = 0
+	if collision != null:
+		if collision.collider is CollisionTile:
+			damage = collision.collider.tile_damage_dict[collision.collider.get_tile_id(collision.position)]
+	return damage
 
