@@ -20,6 +20,15 @@ var _last_collision : KinematicCollision2D
 var _collision : KinematicCollision2D
 #True when you can plant seed
 var can_plant_seed := false
+var player_state = PlayerState.IDLE
+
+#Enumerated player states
+enum PlayerState {
+	IDLE,
+	WALKING,
+	JUMPING,
+	FALLING
+}
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -41,6 +50,19 @@ func _input(event):
 			#lower_health(10)
 
 func _process(_delta):
+	match(player_state):
+		PlayerState.IDLE:
+			animated_sprite.set_animation("idle")
+		PlayerState.WALKING:
+			animated_sprite.set_animation("walking")
+		PlayerState.JUMPING:
+			animated_sprite.set_animation("jumping")
+		PlayerState.FALLING:
+			animated_sprite.set_animation("falling")
+		_:
+			pass
+			#animated_sprite.set_animations("idle")
+
 	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	_input_vector = _input_vector.normalized()
 	_velocity.y += gravity
@@ -58,6 +80,8 @@ func _physics_process(_delta):
 	_velocity.x += _input_vector.x*speed
 	_velocity = move_and_slide(_velocity, Vector2(0,-1))
 
+	_update_animation_state()
+
 	for i in get_slide_count():
 		_collision = get_slide_collision(i)
 		_check_ground_to_plant(_collision)
@@ -68,6 +92,23 @@ func _physics_process(_delta):
 	
 	if was_grounded == null || is_grounded != was_grounded:
 		emit_signal("grounded_updated", is_grounded)
+
+func _update_animation_state():
+	if _velocity.y > 0:
+		player_state = PlayerState.FALLING
+		return
+	elif _velocity.y < 0: 
+		player_state = PlayerState.JUMPING
+		return
+
+	if abs(_velocity.x) > 0:
+		player_state = PlayerState.WALKING
+		if (_velocity.x > 0):
+			animated_sprite.flip_h = false
+		else:
+			animated_sprite.flip_h = true
+	else:
+		player_state = PlayerState.IDLE
 
 #Check the ground if we can plant a seed
 func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
