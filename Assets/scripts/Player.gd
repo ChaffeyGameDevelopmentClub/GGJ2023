@@ -2,6 +2,7 @@
 
 extends LivingObject
 
+signal grounded_updated(is_grounded)
 # Declare member variables here. 
 export var gravity = 8
 export var speed := 300.0
@@ -9,8 +10,11 @@ export var fallMultiplier := 2
 export var lowJumpMultiplier := 10
 export var jumpVelocity := 400
 export var jump_vector := Vector2(0, -300)
+var is_jumping = false
+var is_grounded
 var _velocity := Vector2.ZERO
 var _input_vector = Vector2.ZERO
+
 var seed_planter : SeedPlanter
 var last_collision : KinematicCollision2D
 #True when you can plant seed
@@ -52,8 +56,13 @@ func _physics_process(_delta):
 	_velocity.x = 0
 	_velocity.x += _input_vector.x*speed
 	_velocity = move_and_slide(_velocity, Vector2(0,-1))
-
 	_check_ground_to_plant()
+	
+	var was_grounded = is_grounded
+	is_grounded = is_on_floor()
+	
+	if was_grounded == null || is_grounded != was_grounded:
+		emit_signal("grounded_updated", is_grounded)
 
 #Check the ground if we can plant a seed
 func _check_ground_to_plant() -> void:
