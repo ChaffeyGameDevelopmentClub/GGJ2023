@@ -8,7 +8,7 @@ class_name LevelBase
 export var level_name := ""
 export var start_on_load := false
 var start_time := 0.0
-var level_state = LevelState.NotStarted
+var level_state = LevelState.NOT_STARTED
 
 #Where the player spawns
 onready var starting_point = $StartingPoint
@@ -16,10 +16,10 @@ onready var starting_point = $StartingPoint
 onready var ending_point = $EndingPoint
 
 enum LevelState {
-	NotStarted,
-	Started,
-	Paused,
-	Ended
+	NOT_STARTED,
+	STARTED,
+	PAUSED,
+	ENDED
 }
 
 signal on_level_started
@@ -36,7 +36,7 @@ func start_level():
 
 #Get time elapsed from the start of the level
 func get_time_elapsed() -> float:
-	if level_state == LevelState.Started:
+	if level_state == LevelState.STARTED:
 		return OS.get_system_time_msecs() - start_time
 	else: 
 		return 0.0

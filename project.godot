@@ -78,8 +78,9 @@ Player="*res://Assets/scenes/Player.tscn"
 
 [display]
 
-window/size/width=480
-window/size/height=270
+window/size/width=640
+window/size/height=360
+window/size/fullscreen=true
 window/size/test_width=1920
 window/size/test_height=1080
 window/stretch/mode="viewport"

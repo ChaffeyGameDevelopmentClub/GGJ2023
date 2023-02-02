@@ -7,6 +7,8 @@ extends TileMap
 
 class_name CollisionTile
 
+const tile_scale = 16.0 #pixels
+
 #Key is the tile id, value is the tile name
 const tile_dict := {
 	-1: "invalid",
@@ -29,13 +31,17 @@ func get_tile_name(pos : Vector2) -> String:
 #Returns id of a tile at a given position
 #Returns -1 if no known block is present
 func get_tile_id(pos : Vector2) -> int:
+	pos.y /= 2
+	pos.x /= 2
+
+	#print(pos)
 	var pos_x = pos.x
 	pos = world_to_map(pos)
 
 	#In the event that we are given a coordinate exactly between two blocks,
 	#we must decide between the left or right space. This defaults to the left space
 	#if there is a block present there. If both spaces are vacant, the id will be -1.
-	if fmod(pos_x, 16.0) == 0:
+	if fmod(pos_x, tile_scale) == 0:
 		if get_cellv(Vector2(pos.x-1, pos.y)) != -1:
 			return get_cellv(Vector2(pos.x-1, pos.y))
 		else:
