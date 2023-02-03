@@ -27,6 +27,7 @@ signal on_level_completed
 
 func _ready():
 	self.connect("on_level_started", self, "_on_level_started")
+	Player.connect("restart_player", self, "_level_restart")
 	if start_on_load:
 		start_level()
 
@@ -45,6 +46,9 @@ func get_time_elapsed() -> float:
 func _on_level_started():
 	Player.position = starting_point.position
 	start_time = OS.get_system_time_msecs()
+
+func _level_restart():
+	Player.position = starting_point.position
 
 #When the player enters the ending point, the level is completed
 func _on_Area2D_body_entered(body:Node):

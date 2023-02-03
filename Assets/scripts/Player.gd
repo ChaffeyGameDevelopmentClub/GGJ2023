@@ -23,6 +23,12 @@ var _tile_snap = Vector2.ZERO
 var can_plant_seed := false
 var player_state = PlayerState.IDLE
 
+#Restart functions
+onready var TransitionTween = $CanvasLayer/RestartTransition/Tween
+onready var ColorTrans = $CanvasLayer/RestartTransition
+signal restart_player
+signal give_seed
+
 #Enumerated player states
 enum PlayerState {
 	IDLE,
@@ -74,6 +80,16 @@ func _process(_delta):
 	if is_on_floor():
 		if Input.is_action_just_pressed("ui_accept"):
 			_velocity = Vector2.UP * jumpVelocity
+	
+	if Input.is_action_just_pressed("Restart"): 
+		TransitionTween.interpolate_property(ColorTrans, "modulate:a", 0,1,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
+		TransitionTween.start()
+		yield(TransitionTween, "tween_completed")
+		emit_signal("restart_player")
+		emit_signal("give_seed")
+		TransitionTween.interpolate_property(ColorTrans, "modulate:a", 1,0,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
+		TransitionTween.start()
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
