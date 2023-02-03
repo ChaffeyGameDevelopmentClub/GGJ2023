@@ -18,6 +18,7 @@ var _input_vector = Vector2.ZERO
 var seed_planter : SeedPlanter
 var _last_collision : KinematicCollision2D
 var _collision : KinematicCollision2D
+var _tile_snap = Vector2.ZERO
 #True when you can plant seed
 var can_plant_seed := false
 var player_state = PlayerState.IDLE
@@ -97,17 +98,22 @@ func _physics_process(_delta):
 	_velocity = move_and_slide(_velocity, Vector2(0,-1))
 
 	_update_animation_state()
-
-	for i in get_slide_count():
-		_collision = get_slide_collision(i)
-		_check_ground_to_plant(_collision)
-		lower_health(_check_block_damage(_collision))
+	
+	_handle_collisions()
 	
 	var was_grounded = is_grounded
 	is_grounded = is_on_floor()
 	
 	if was_grounded == null || is_grounded != was_grounded:
 		emit_signal("grounded_updated", is_grounded)
+		
+func _handle_collisions():
+	for i in get_slide_count():
+		_collision = get_slide_collision(i)
+		_check_ground_to_plant(_collision)
+		lower_health(_check_block_damage(_collision))
+	if not is_on_floor():
+			can_plant_seed = false
 
 func _update_animation_state():
 	if _velocity.y > 0:
@@ -130,9 +136,9 @@ func _update_animation_state():
 func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
 	if collision != null:
 		if collision.collider is CollisionTile:
-			can_plant_seed = (collision.collider.get_tile_id(collision.position) == 0 and is_on_floor())
-			return
-	can_plant_seed = false
+			if is_on_floor():
+				collision.collider
+				can_plant_seed = (collision.collider.get_tile_id(collision.position) == 0)
 
 #Checks the damage of the given block that was collided with, and returns it
 func _check_block_damage(collision : KinematicCollision2D) -> int:
@@ -141,4 +147,9 @@ func _check_block_damage(collision : KinematicCollision2D) -> int:
 		if collision.collider is CollisionTile:
 			damage = collision.collider.tile_damage_dict[collision.collider.get_tile_id(collision.position)]
 	return damage
+	
+func update_tile_snap(var pos : Vector2):
+	pos.x += 8 #adjust for half the width of a tile in pixels (16 px per tile)
+	pos *= 2 #adjust for tile scale (2x)
+	_tile_snap = pos
 
