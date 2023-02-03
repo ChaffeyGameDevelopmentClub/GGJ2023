@@ -49,6 +49,7 @@ func _on_level_started():
 
 func _level_restart():
 	Player.position = starting_point.position
+	Player.revive()
 
 #When the player enters the ending point, the level is completed
 func _on_Area2D_body_entered(body:Node):

@@ -47,6 +47,7 @@ func _ready():
 
 # Called when the player is killed.	
 func _on_player_killed() -> void:
+	_restart()
 	print("Game OVER!")
 
 #handle input events
@@ -57,6 +58,11 @@ func _input(event):
 			#lower_health(10)
 
 func _process(_delta):
+	if Player.is_dead():
+		_input_vector.x = 0
+		animated_sprite.set_animation("death")
+		return;
+
 	match(player_state):
 		PlayerState.IDLE:
 			animated_sprite.set_animation("idle")
@@ -70,9 +76,9 @@ func _process(_delta):
 			pass
 			#animated_sprite.set_animations("idle")
 
+
 	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	_input_vector = _input_vector.normalized()
-	_velocity.y += gravity
 	if _velocity.y > 0:
 		_velocity +=  Vector2.UP * (fallMultiplier) * (-9.81)  
 	elif Input.is_action_just_released("ui_select") and _velocity.y < 0:
@@ -82,13 +88,11 @@ func _process(_delta):
 			_velocity = Vector2.UP * jumpVelocity
 	
 	if Input.is_action_just_pressed("Restart"): 
-		TransitionTween.interpolate_property(ColorTrans, "modulate:a", 0,1,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
-		TransitionTween.start()
-		yield(TransitionTween, "tween_completed")
-		emit_signal("restart_player")
-		emit_signal("give_seed")
-		TransitionTween.interpolate_property(ColorTrans, "modulate:a", 1,0,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
-		TransitionTween.start()
+		_restart()
+		
+		
+	_velocity.y += gravity
+	
 	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -98,7 +102,6 @@ func _physics_process(_delta):
 	_velocity = move_and_slide(_velocity, Vector2(0,-1))
 
 	_update_animation_state()
-	
 	_handle_collisions()
 	
 	var was_grounded = is_grounded
@@ -106,12 +109,21 @@ func _physics_process(_delta):
 	
 	if was_grounded == null || is_grounded != was_grounded:
 		emit_signal("grounded_updated", is_grounded)
+
+func _restart():
+	TransitionTween.interpolate_property(ColorTrans, "modulate:a", 0,1,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
+	TransitionTween.start()
+	yield(TransitionTween, "tween_completed")
+	emit_signal("restart_player")
+	emit_signal("give_seed")
+	TransitionTween.interpolate_property(ColorTrans, "modulate:a", 1,0,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
+	TransitionTween.start()
 		
 func _handle_collisions():
 	for i in get_slide_count():
 		_collision = get_slide_collision(i)
 		_check_ground_to_plant(_collision)
-		lower_health(_check_block_damage(_collision))
+		_check_block_damage(_collision)
 	if not is_on_floor():
 			can_plant_seed = false
 
@@ -141,12 +153,14 @@ func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
 				can_plant_seed = (collision.collider.get_tile_id(collision.position) == 0)
 
 #Checks the damage of the given block that was collided with, and returns it
-func _check_block_damage(collision : KinematicCollision2D) -> int:
+func _check_block_damage(collision : KinematicCollision2D) -> void:
 	var damage = 0
 	if collision != null:
 		if collision.collider is CollisionTile:
 			damage = collision.collider.tile_damage_dict[collision.collider.get_tile_id(collision.position)]
-	return damage
+			if damage > 0:
+				lower_health(damage)
+
 	
 func update_tile_snap(var pos : Vector2):
 	pos.x += 8 #adjust for half the width of a tile in pixels (16 px per tile)

@@ -35,6 +35,11 @@ func _ready():
 func is_dead() -> bool:
 	return _has_died or health.get_value() <= 0
 
+func revive():
+	_has_died = false
+	health.set_value(max_health)
+
+
 # Returns the current health of this object.
 func get_health() -> int:
 	return health.get_value()
@@ -56,6 +61,8 @@ func set_health(new_health : int) -> int:
 	# Exit function if we're already dead.
 	if _is_initialized and is_dead():
 		return health.get_value()
+
+	print("foop")
 
 	# Change health and fire signal.
 	var old_health = health.get_value()
