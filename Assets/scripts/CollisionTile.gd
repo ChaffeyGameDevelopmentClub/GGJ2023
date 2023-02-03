@@ -17,6 +17,14 @@ const tile_dict := {
 	3: "lava",
 }
 
+const plantable_dict := {
+	-1: 0,
+	0: 1,
+	2: 0,
+	3: 0,
+	
+}
+
 const tile_damage_dict := {
 	-1: 0,
 	0: 0,
@@ -33,17 +41,15 @@ func get_tile_name(pos : Vector2) -> String:
 func get_tile_id(pos : Vector2) -> int:
 	pos.y /= 2
 	pos.x /= 2
-
-	#print(pos)
 	var pos_x = pos.x
 	pos = world_to_map(pos)
-
+	
 	#In the event that we are given a coordinate exactly between two blocks,
 	#we must decide between the left or right space. This defaults to the left space
 	#if there is a block present there. If both spaces are vacant, the id will be -1.
 	if fmod(pos_x, tile_scale) == 0:
-		if get_cellv(Vector2(pos.x-1, pos.y)) != -1:
-			return get_cellv(Vector2(pos.x-1, pos.y))
-		else:
-			return get_cellv(Vector2(pos.x, pos.y))
+		pos = Vector2(pos.x-1, pos.y) if get_cellv(Vector2(pos.x-1, pos.y)) != -1 else Vector2(pos.x, pos.y)
+
+	Player.update_tile_snap(map_to_world(pos))
+
 	return get_cellv(pos)
