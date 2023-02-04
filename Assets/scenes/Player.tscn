@@ -9,8 +9,8 @@
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_idle.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Dead.png" type="Texture" id=8]
 
-[sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 14, 13.5 )
+[sub_resource type="RectangleShape2D" id=48]
+extents = Vector2( 7, 14 )
 
 [sub_resource type="AtlasTexture" id=32]
 atlas = ExtResource( 8 )
@@ -186,13 +186,13 @@ animations = [ {
 } ]
 
 [node name="Player" instance=ExtResource( 3 )]
-position = Vector2( 0, -8 )
+position = Vector2( 1, -8 )
 script = ExtResource( 1 )
 gravity = 9
-speed = 300.0
+speed = 100.0
 fallMultiplier = 1
 lowJumpMultiplier = 10
-jumpVelocity = 200
+jumpVelocity = 270
 jump_vector = Vector2( 0, -300 )
 
 [node name="Camera2D" type="Camera2D" parent="." index="0"]
@@ -210,14 +210,12 @@ script = ExtResource( 5 )
 [node name="ShiftTween" type="Tween" parent="Camera2D" index="0"]
 
 [node name="CollisionShape2D" parent="." index="1"]
-position = Vector2( 0, 0.5 )
-shape = SubResource( 2 )
+shape = SubResource( 48 )
 
 [node name="AnimatedSprite" parent="." index="2"]
 scale = Vector2( 1, 1 )
 frames = SubResource( 9 )
-animation = "death"
-frame = 15
+animation = "idle"
 playing = true
 
 [node name="SeedPlanter" type="Node2D" parent="." index="3"]
