@@ -92,14 +92,15 @@ func _process(_delta):
 		
 		
 	_velocity.y += gravity
-	
-	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	_velocity.x = 0
 	_velocity.x += _input_vector.x*speed
-	_velocity = move_and_slide(_velocity, Vector2(0,-1))
+
+	#_velocity = 
+	_velocity = move_and_slide(_velocity, Vector2.UP)
+
 
 	_update_animation_state()
 	_handle_collisions()
