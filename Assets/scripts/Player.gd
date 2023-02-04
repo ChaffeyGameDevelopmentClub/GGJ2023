@@ -157,6 +157,10 @@ func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
 				collision.collider
 				_has_friction = (collision.collider.frictionless_dict[collision.collider.get_tile_id(collision.position)])
 				can_plant_seed = ( collision.collider.plantable_dict[collision.collider.get_tile_id(collision.position)])
+				return
+			else:
+				_has_friction = true
+	
 
 #Checks the damage of the given block that was collided with, and returns it
 func _check_block_damage(collision : KinematicCollision2D) -> void:
