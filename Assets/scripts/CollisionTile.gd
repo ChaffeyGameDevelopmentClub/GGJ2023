@@ -7,7 +7,7 @@ extends TileMap
 
 class_name CollisionTile
 
-const tile_scale = 16.0 #pixels
+const tile_scale = 32.0 #pixels
 
 #Key is the tile id, value is the tile name
 const tile_dict := {
@@ -15,14 +15,17 @@ const tile_dict := {
 	0: "grass",
 	2: "metal",
 	3: "lava",
+	4: "dirt",
+	5: "ice",
 }
 
 const plantable_dict := {
-	-1: 0,
-	0: 1,
-	2: 0,
-	3: 0,
-	
+	-1: false,
+	0: false,
+	2: false,
+	3: false,
+	4: true,
+	5: false,
 }
 
 const tile_damage_dict := {
@@ -30,6 +33,17 @@ const tile_damage_dict := {
 	0: 0,
 	2: 0,
 	3: 100,
+	4: 0,
+	5: 0,
+}
+
+const frictionless_dict := {
+	-1: false,
+	0: false,
+	2: false,
+	3: false,
+	4: false,
+	5: true,
 }
 
 #returns the name of a tile at a given position
@@ -39,8 +53,6 @@ func get_tile_name(pos : Vector2) -> String:
 #Returns id of a tile at a given position
 #Returns -1 if no known block is present
 func get_tile_id(pos : Vector2) -> int:
-	pos.y /= 2
-	pos.x /= 2
 	var pos_x = pos.x
 	pos = world_to_map(pos)
 	
