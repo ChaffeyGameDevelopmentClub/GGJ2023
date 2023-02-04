@@ -10,6 +10,7 @@ export var fallMultiplier := 2
 export var lowJumpMultiplier := 10
 export var jumpVelocity := 400
 export var jump_vector := Vector2(0, -300)
+const _max_velocity = 130
 var is_jumping = false
 var is_grounded
 var _velocity := Vector2.ZERO
@@ -21,6 +22,7 @@ var _collision : KinematicCollision2D
 var _tile_snap = Vector2.ZERO
 #True when you can plant seed
 var can_plant_seed := false
+var _has_friction := true
 var player_state = PlayerState.IDLE
 
 #Restart functions
@@ -98,8 +100,10 @@ func _process(_delta):
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	_velocity.x = 0
+	if not _has_friction:
+		_velocity.x = 0
 	_velocity.x += _input_vector.x*speed
+	_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
 
 	#_velocity = 
 	_velocity = move_and_slide(_velocity, Vector2.UP)
@@ -152,7 +156,8 @@ func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
 		if collision.collider is CollisionTile:
 			if is_on_floor():
 				collision.collider
-				can_plant_seed = (collision.collider.get_tile_id(collision.position) == 0)
+				_has_friction = (collision.collider.frictionless_dict[collision.collider.get_tile_id(collision.position)])
+				can_plant_seed = ( collision.collider.plantable_dict[collision.collider.get_tile_id(collision.position)])
 
 #Checks the damage of the given block that was collided with, and returns it
 func _check_block_damage(collision : KinematicCollision2D) -> void:
@@ -165,7 +170,6 @@ func _check_block_damage(collision : KinematicCollision2D) -> void:
 
 	
 func update_tile_snap(var pos : Vector2):
-	pos.x += 8 #adjust for half the width of a tile in pixels (16 px per tile)
-	pos *= 2 #adjust for tile scale (2x)
+	pos.x += 16 #adjust for half the width of a tile in pixels (16 px per tile)
 	_tile_snap = pos
 
