@@ -1,22 +1,22 @@
 [gd_scene load_steps=4 format=2]
 
-[ext_resource path="res://Assets/Textures/Growing_Tree2.png" type="Texture" id=1]
-[ext_resource path="res://Assets/scenes/Spawnable Plants/BouncyFlower.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Textures/mushroom.png" type="Texture" id=1]
+[ext_resource path="res://Assets/scripts/BouncyFlower.gd" type="Script" id=2]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 18.5, 10 )
+extents = Vector2( 15, 11.5 )
 
-[node name="BouncyFlower" type="Sprite"]
-modulate = Color( 0.341176, 0.278431, 0.792157, 1 )
-position = Vector2( 23, -96 )
-scale = Vector2( 3, 3 )
+[node name="FlowerCenter" type="StaticBody2D"]
+
+[node name="BouncyFlower" type="Sprite" parent="."]
+position = Vector2( 0, -16 )
 texture = ExtResource( 1 )
 script = ExtResource( 2 )
 
-[node name="HitBoxs" type="Area2D" parent="."]
+[node name="HitBoxs" type="Area2D" parent="BouncyFlower"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxs"]
-position = Vector2( -9.33333, 22 )
+[node name="CollisionShape2D" type="CollisionShape2D" parent="BouncyFlower/HitBoxs"]
+position = Vector2( 0, -1.5 )
 shape = SubResource( 1 )
 
-[connection signal="body_shape_entered" from="HitBoxs" to="." method="_on_HitBoxs_body_shape_entered"]
+[connection signal="body_shape_entered" from="BouncyFlower/HitBoxs" to="BouncyFlower" method="_on_HitBoxs_body_shape_entered"]

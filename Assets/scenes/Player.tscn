@@ -186,7 +186,6 @@ animations = [ {
 } ]
 
 [node name="Player" instance=ExtResource( 3 )]
-position = Vector2( 1, -8 )
 script = ExtResource( 1 )
 gravity = 9
 speed = 100.0
