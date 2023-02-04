@@ -44,11 +44,11 @@ func get_time_elapsed() -> float:
 
 #Function that executes whenever the level is started
 func _on_level_started():
-	Player.position = starting_point.position
+	Player.position = starting_point.position*2
 	start_time = OS.get_system_time_msecs()
 
 func _level_restart():
-	Player.position = starting_point.position
+	Player.position = starting_point.position*2
 	Player.revive()
 
 #When the player enters the ending point, the level is completed

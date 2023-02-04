@@ -76,6 +76,9 @@ func _process(_delta):
 			pass
 			#animated_sprite.set_animations("idle")
 
+	if Input.is_action_just_pressed("CycleSeed"):
+		seed_planter.cycle_seed()
+
 
 	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	_input_vector = _input_vector.normalized()

@@ -14,6 +14,9 @@ var seed_power : ClampedInteger
 # The current seed model used in this planter. When a seed is planted it will be this type. Do not get/set it directly.
 var _seed_model : SeedModel
 
+var seeds = [PlatformTreeSeed.new(), BouncyFlowerSeed.new()]
+var _seed_index = 0
+
 # Called when this planter runs out of seed power.
 signal on_seed_power_depleted()
 signal give_seed
@@ -26,6 +29,11 @@ func _ready():
 	Player.connect("give_seed", self, "_seed_replenish")
 	
 	pass # Replace with function body.
+
+func cycle_seed() -> void:
+	_seed_index += 1
+	_seed_index = 0 if _seed_index >= len(seeds) else _seed_index
+	set_seed_model(seeds[_seed_index])
 
 # Returns the current seed model.
 func get_seed_model() -> SeedModel:
