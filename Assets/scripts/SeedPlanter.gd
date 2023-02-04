@@ -65,11 +65,17 @@ func plant_seed() -> void:
 		print("Can't plant seed, out of seed power")
 		return # Exit if we can't plant a seed.
 
+	#We check if any plants already exist on player's tile.
+	for child in Player.get_children():
+		if child is SpawnablePlant:
+			if child.position == Player._tile_snap: #wooo convention i'm so faithful to convention amirite
+				return
+
 	var planted_object = _seed_model.spawn_plant()
 	if planted_object == null:
 		return
-
-	add_child(planted_object)
+		
+	Player.add_child(planted_object)
 	planted_object.position = Player._tile_snap
 	planted_object.set_as_toplevel(true)
 	

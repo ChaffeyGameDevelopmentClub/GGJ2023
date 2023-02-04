@@ -49,10 +49,10 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://Assets/scripts/SeedPlanter.gd"
 }, {
-"base": "TileMap",
-"class": "Tile",
+"base": "Node",
+"class": "SpawnablePlant",
 "language": "GDScript",
-"path": "res://Assets/scripts/tile scripts/Tile.gd"
+"path": "res://Assets/scripts/SpawnablePlant.gd"
 } ]
 _global_script_class_icons={
 "BouncyFlowerSeed": "",
@@ -63,7 +63,7 @@ _global_script_class_icons={
 "PlatformTreeSeed": "",
 "SeedModel": "",
 "SeedPlanter": "",
-"Tile": ""
+"SpawnablePlant": ""
 }
 
 [application]
@@ -75,12 +75,6 @@ config/icon="res://Assets/Textures/icon.png"
 [autoload]
 
 Player="*res://Assets/scenes/Player.tscn"
-
-[debug]
-
-settings/fps/force_fps=30
-settings/stdout/print_fps=true
-settings/stdout/verbose_stdout=true
 
 [display]
 
