@@ -81,6 +81,17 @@ func _process(_delta):
 	if Input.is_action_just_pressed("CycleSeed"):
 		seed_planter.cycle_seed()
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _physics_process(_delta):
+	if not _has_friction:
+		_velocity.x = 0
+	_velocity.x += _input_vector.x*speed
+	_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
+
+	#_velocity = 
+	_velocity = move_and_slide(_velocity, Vector2.UP)
+	_update_animation_state()
+	_handle_collisions()
 
 	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	_input_vector = _input_vector.normalized()
@@ -97,18 +108,6 @@ func _process(_delta):
 		
 		
 	_velocity.y += gravity
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(_delta):
-	if not _has_friction:
-		_velocity.x = 0
-	_velocity.x += _input_vector.x*speed
-	_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
-
-	#_velocity = 
-	_velocity = move_and_slide(_velocity, Vector2.UP)
-	_update_animation_state()
-	_handle_collisions()
 	
 	var was_grounded = is_grounded
 	is_grounded = is_on_floor()

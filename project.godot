@@ -76,6 +76,12 @@ config/icon="res://Assets/Textures/icon.png"
 
 Player="*res://Assets/scenes/Player.tscn"
 
+[debug]
+
+settings/fps/force_fps=30
+settings/stdout/print_fps=true
+settings/stdout/verbose_stdout=true
+
 [display]
 
 window/size/width=640
