@@ -1,0 +1,14 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/scripts/CollisionTile.gd" type="Script" id=1]
+
+[node name="Tiles" type="Node2D"]
+
+[node name="CollisionTiles" type="TileMap" parent="."]
+cell_size = Vector2( 16, 16 )
+show_collision = true
+format = 1
+script = ExtResource( 1 )
+
+[node name="BackgroundTiles" type="TileMap" parent="."]
+format = 1

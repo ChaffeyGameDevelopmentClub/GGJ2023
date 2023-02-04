@@ -1,7 +1,9 @@
 # Controls all functionality related to planting seeds.
 
-extends Node
+extends Node2D
 class_name SeedPlanter
+
+
 
 # The maximum seed power we can have.
 export var _max_seed_power := 3
@@ -14,12 +16,15 @@ var _seed_model : SeedModel
 
 # Called when this planter runs out of seed power.
 signal on_seed_power_depleted()
+signal give_seed
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	seed_power = ClampedInteger.new(0, _max_seed_power)
 	seed_power.connect("on_value_changed", self, "_check_for_depletion")
 	seed_power.set_value(_max_seed_power)
+	Player.connect("give_seed", self, "_seed_replenish")
+	
 	pass # Replace with function body.
 
 # Returns the current seed model.
@@ -55,14 +60,12 @@ func plant_seed() -> void:
 	var planted_object = _seed_model.spawn_plant()
 	if planted_object == null:
 		return
-	
-	# move planted object to the player's position.
-	var player = get_parent()
-	var player_sprite_radius = 32
-	var current_position = player.get_position()
-	var new_position = Vector2(current_position.x + planted_object.get_position().x, current_position.y + planted_object.get_position().y + player_sprite_radius)
-	planted_object.set_position(new_position)
 
-	_seed_model._on_seed_planted(planted_object)
 	add_child(planted_object)
+	planted_object.position = Player._tile_snap
+	planted_object.set_as_toplevel(true)
+	
 	seed_power.lower_value(_seed_model.seed_power_cost)
+
+func _seed_replenish():
+	seed_power.set_value(_max_seed_power)

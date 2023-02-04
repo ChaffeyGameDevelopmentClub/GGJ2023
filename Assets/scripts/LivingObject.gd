@@ -10,6 +10,8 @@ export var max_health := 100
 # Can the health exceed max health, for example if the player drinks a health potion?
 export var can_exceed_max_health := false
 
+onready var animated_sprite = $AnimatedSprite
+
 # A clamped integer that holds the current health. To get/set values, use the functions in LivingObject.
 var health : ClampedInteger
 
@@ -33,6 +35,11 @@ func _ready():
 func is_dead() -> bool:
 	return _has_died or health.get_value() <= 0
 
+func revive():
+	_has_died = false
+	health.set_value(max_health)
+
+
 # Returns the current health of this object.
 func get_health() -> int:
 	return health.get_value()
@@ -54,6 +61,8 @@ func set_health(new_health : int) -> int:
 	# Exit function if we're already dead.
 	if _is_initialized and is_dead():
 		return health.get_value()
+
+	print("foop")
 
 	# Change health and fire signal.
 	var old_health = health.get_value()
