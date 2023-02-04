@@ -100,8 +100,6 @@ func _physics_process(_delta):
 
 	#_velocity = 
 	_velocity = move_and_slide(_velocity, Vector2.UP)
-
-
 	_update_animation_state()
 	_handle_collisions()
 	
