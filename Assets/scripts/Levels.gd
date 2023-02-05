@@ -1,6 +1,6 @@
 extends Node
 
-var levels = ["res://Assets/scenes/levels/DebugLevel.tscn", "res://Assets/scenes/levels/DebugLevel.tscn", "res://Assets/scenes/levels/DebugLevel.tscn"]
+var levels = ["res://Assets/scenes/levels/Level1.tscn", "res://Assets/scenes/levels/Level2.tscn", "res://Assets/scenes/levels/Level3.tscn"]
 var level_index = 0
 
 func start_next_level():

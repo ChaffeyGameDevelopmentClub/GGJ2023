@@ -86,6 +86,9 @@ func _level_restart():
 	for child in Player.get_children():
 		if child is SpawnablePlant:
 			child.queue_free()
+
+	for enemy in get_tree().get_nodes_in_group("enemy"):
+		enemy.revive()
 	Player.seed_planter.seed_replenish()
 
 var ended = false

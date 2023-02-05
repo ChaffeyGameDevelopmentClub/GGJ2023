@@ -239,7 +239,7 @@ shape = SubResource( 48 )
 scale = Vector2( 1, 1 )
 frames = SubResource( 9 )
 animation = "idle"
-frame = 1
+frame = 4
 playing = true
 
 [node name="SeedPlanter" type="Node2D" parent="." index="3"]
@@ -252,10 +252,10 @@ script = ExtResource( 4 )
 
 [node name="RestartTransition" type="ColorRect" parent="CanvasLayer" index="0"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = -1184.0
-margin_top = 208.0
-margin_right = 1021.0
-margin_bottom = 1353.0
+margin_left = -1072.0
+margin_top = -496.0
+margin_right = 1133.0
+margin_bottom = 649.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="Tween" type="Tween" parent="CanvasLayer/RestartTransition" index="0"]
