@@ -1,10 +1,11 @@
-[gd_resource type="TileSet" load_steps=241 format=2]
+[gd_resource type="TileSet" load_steps=242 format=2]
 
 [ext_resource path="res://Assets/Textures/grass/tileset_grass.png" type="Texture" id=1]
 [ext_resource path="res://Assets/Textures/metal/tileset_metal.png" type="Texture" id=2]
 [ext_resource path="res://Assets/Textures/lava/tileset_lava.png" type="Texture" id=3]
 [ext_resource path="res://Assets/Textures/dirt/tileset_dirt.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Textures/ice/tileset_ice.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Textures/web/tileset_web.png" type="Texture" id=6]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
@@ -2242,3 +2243,17 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 "shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 5/z_index = 0
+6/name = "tileset_web.png 6"
+6/texture = ExtResource( 6 )
+6/tex_offset = Vector2( 0, 0 )
+6/modulate = Color( 1, 1, 1, 1 )
+6/region = Rect2( 0, 0, 32, 32 )
+6/tile_mode = 0
+6/occluder_offset = Vector2( 0, 0 )
+6/navigation_offset = Vector2( 0, 0 )
+6/shape_offset = Vector2( 0, 0 )
+6/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+6/shape_one_way = false
+6/shape_one_way_margin = 0.0
+6/shapes = [  ]
+6/z_index = 0

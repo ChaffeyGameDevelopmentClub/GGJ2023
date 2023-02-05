@@ -14,7 +14,7 @@ var seed_power : ClampedInteger
 # The current seed model used in this planter. When a seed is planted it will be this type. Do not get/set it directly.
 var _seed_model : SeedModel
 
-var seeds = [PlatformTreeSeed.new(), BouncyFlowerSeed.new()]
+var seeds = [PlatformTreeSeed.new(), BouncyFlowerSeed.new(), BridgeSeed.new()]
 var _seed_index = 0
 onready var plant_tween = $PlantTween
 

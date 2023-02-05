@@ -20,6 +20,7 @@ var seed_planter : SeedPlanter
 var _last_collision : KinematicCollision2D
 var _collision : KinematicCollision2D
 var _tile_snap = Vector2.ZERO
+var tile_map : TileMap
 #True when you can plant seed
 var can_plant_seed := false
 var _has_friction := true
@@ -60,6 +61,20 @@ func _on_player_killed() -> void:
 func _input(event):
 	if event is InputEventKey and event.pressed:
 		if event.scancode == KEY_T and can_plant_seed and player_state != PlayerState.PLANTING:
+			if seed_planter.get_seed_model() is BridgeSeed:
+				if can_plant_right():
+					var new_snap = tile_map.world_to_map(_tile_snap)
+					new_snap.x += 1
+					new_snap = tile_map.map_to_world(new_snap)
+					_tile_snap = new_snap
+				elif can_plant_left():
+					var new_snap = tile_map.world_to_map(_tile_snap)
+					new_snap.x -= 3
+					new_snap = tile_map.map_to_world(new_snap)
+					_tile_snap = new_snap
+
+				else:
+					return
 			bury()
 			seed_planter.plant_seed()
 
@@ -177,7 +192,6 @@ func _check_friction(collision : KinematicCollision2D):
 	if collision != null:
 		if collision.collider is SpawnablePlant:
 			_has_friction = true	
-			print(_has_friction)
 		elif collision.collider is CollisionTile:
 			_has_friction = (collision.collider.friction_dict[collision.collider.get_tile_id(collision.position)])
 
@@ -190,7 +204,45 @@ func _check_block_damage(collision : KinematicCollision2D) -> void:
 			if damage > 0:
 				lower_health(damage)
 
+func can_plant_right() -> bool:
+	var snap_pos = Vector2(tile_map.world_to_map(_tile_snap))
+	snap_pos.x += 1
 	
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+
+	snap_pos.x += 1
+
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+	
+	snap_pos.x += 1
+
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+	
+	return true
+
+func can_plant_left() -> bool:
+	var snap_pos = Vector2(tile_map.world_to_map(_tile_snap))
+	snap_pos.x -= 1
+	
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+
+	snap_pos.x -= 1
+
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+	
+	snap_pos.x -= 1
+
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+	
+	return true
+	
+
 func update_tile_snap(var pos : Vector2):
 	pos.x += 16 #adjust for half the width of a tile in pixels (16 px per tile)
 	_tile_snap = pos
