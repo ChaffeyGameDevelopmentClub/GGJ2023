@@ -1,4 +1,4 @@
-[gd_scene load_steps=140 format=2]
+[gd_scene load_steps=141 format=2]
 
 [ext_resource path="res://Assets/scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2_shroom.png" type="Texture" id=2]
@@ -20,6 +20,7 @@
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_idle_2_bridge.png" type="Texture" id=18]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_jumping_2_bridge.png" type="Texture" id=19]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2_bridge.png" type="Texture" id=20]
+[ext_resource path="res://Assets/sounds/music/death.wav" type="AudioStream" id=21]
 
 [sub_resource type="RectangleShape2D" id=48]
 extents = Vector2( 7, 14 )
@@ -649,7 +650,7 @@ playing = true
 [node name="LeafSprite" type="AnimatedSprite" parent="." index="3"]
 frames = SubResource( 117 )
 animation = "walking"
-frame = 1
+frame = 3
 playing = true
 __meta__ = {
 "_aseprite_wizard_config_": {
@@ -667,6 +668,7 @@ __meta__ = {
 visible = false
 frames = SubResource( 163 )
 animation = "idle"
+frame = 2
 playing = true
 __meta__ = {
 "_aseprite_wizard_config_": {
@@ -684,7 +686,7 @@ __meta__ = {
 visible = false
 frames = SubResource( 125 )
 animation = "idle"
-frame = 1
+frame = 2
 playing = true
 __meta__ = {
 "_aseprite_wizard_config_": {
@@ -731,6 +733,9 @@ volume_db = -11.381
 [node name="Plant" type="AudioStreamPlayer2D" parent="." index="12"]
 stream = ExtResource( 11 )
 volume_db = 10.182
+
+[node name="Death" type="AudioStreamPlayer2D" parent="." index="13"]
+stream = ExtResource( 21 )
 
 [connection signal="tween_all_completed" from="SeedPlanter/PlantTween" to="." method="_on_PlantTween_tween_all_completed"]
 [connection signal="tween_all_completed" from="PlayerTween" to="SeedPlanter" method="_on_PlayerTween_tween_all_completed"]

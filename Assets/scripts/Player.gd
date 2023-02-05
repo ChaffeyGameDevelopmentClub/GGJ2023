@@ -31,11 +31,13 @@ onready var tween_target := $TweenTarget
 onready var no_place = $NoPlace
 onready var walk = $Walk
 onready var plant = $Plant
+onready var death = $Death
 
 onready var leafsprite = $LeafSprite
 onready var bridgesprite = $BridgeSprite
 onready var shroomsprite = $ShroomSprite
 onready var camera = $Camera2D
+
 
 #Restart functions
 onready var TransitionTween = $CanvasLayer/RestartTransition/Tween
@@ -72,6 +74,7 @@ func _ready():
 
 # Called when the player is killed.	
 func _on_player_killed() -> void:
+	death.play()
 	_restart()
 	print("Game OVER!")
 

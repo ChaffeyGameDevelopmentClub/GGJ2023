@@ -3,6 +3,7 @@ extends AnimatedSprite
 
 export var bouncyPower = 1
 onready var hit_box = $HitBoxs
+onready var bounce = $AudioStreamPlayer2D
 
 
 
@@ -12,6 +13,7 @@ onready var hit_box = $HitBoxs
 func _on_HitBoxs_body_shape_entered(body_rid, body, body_shape_index, local_shape_index):
 	if body == Player:
 		self.set_animation("bounce")
+		bounce.play()
 		
 		#body._velocity = Vector2(0, 0)
 		if body._velocity.y > 0:

@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Assets/Textures/bg4.png" type="Texture" id=1]
 [ext_resource path="res://Assets/scenes/levels/LevelBase.tscn" type="PackedScene" id=2]
@@ -41,6 +41,49 @@ tracks/1/keys = {
 }
 
 [sub_resource type="Animation" id=2]
+resource_name = "fade_in"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 20 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=5]
 resource_name = "fade_in"
 length = 20.0
 tracks/0/type = "value"
@@ -107,7 +150,7 @@ region_enabled = true
 region_rect = Rect2( 0, 0, 1280, 360 )
 
 [node name="CollisionTiles" parent="Tiles" index="0"]
-tile_data = PoolIntArray( -655303, 0, 4, -655302, 0, 196609, -655301, 0, 196610, -589767, 0, 65539, -524231, 0, 65539, -458695, 0, 65539, -393167, 0, 4, -393166, 0, 196609, -393165, 0, 196609, -393164, 0, 196610, -393163, 4, 196611, -393159, 0, 65539, -327636, 4, 196611, -327635, 6, 0, -327634, 6, 0, -327633, 6, 0, -327632, 6, 0, -327631, 0, 65539, -327627, 0, 3, -327623, 0, 65539, -196612, 0, 3, -262095, 0, 65539, -262091, 0, 65539, -262087, 0, 65539, -131076, 0, 65539, -196589, 5, 196611, -196587, 0, 4, -196586, 0, 196609, -196585, 0, 196609, -196584, 0, 196609, -196583, 0, 196609, -196582, 0, 7, -196581, 6, 0, -196580, 6, 0, -196579, 6, 0, -196578, 0, 3, -196570, 0, 4, -196569, 0, 196609, -196568, 0, 196609, -196567, 0, 196609, -196566, 0, 196609, -196565, 0, 7, -196559, 0, 65539, -196555, 0, 65539, -196551, 0, 65539, -65540, 0, 65539, -131055, 5, 196611, -131051, 0, 65539, -131046, 0, 65539, -131042, 0, 65539, -131034, 0, 65539, -131029, 0, 131075, -131028, 4, 196611, -131024, 4, 196611, -131023, 0, 65539, -131019, 0, 65539, -131015, 0, 65539, -4, 0, 65539, -65515, 0, 65539, -65510, 0, 131075, -65509, 3, 196611, -65508, 4, 196611, -65507, 3, 196611, -65506, 0, 196612, -65505, 0, 196609, -65504, 0, 196609, -65503, 0, 196610, -65502, 4, 196611, -65501, 6, 0, -65500, 6, 0, -65499, 6, 0, -65498, 0, 65539, -65492, 3, 196608, -65491, 3, 196609, -65490, 3, 196609, -65489, 3, 196609, -65488, 3, 196610, -65487, 0, 131075, -65483, 0, 65539, -65479, 0, 65539, 65532, 0, 196612, 65533, 0, 196609, 65534, 0, 196609, 65535, 0, 196609, 0, 0, 196609, 1, 0, 196609, 2, 0, 196610, 3, 4, 196611, 7, 0, 4, 8, 0, 196609, 9, 0, 7, 13, 0, 4, 14, 0, 196609, 15, 0, 196610, 16, 3, 196608, 17, 3, 196609, 18, 3, 196609, 19, 3, 196609, 20, 3, 196610, 21, 0, 131075, 34, 0, 3, 38, 0, 65539, 53, 0, 65539, 57, 0, 65539, 65539, 0, 196611, 65540, 3, 196608, 65541, 3, 196609, 65542, 3, 196610, 65543, 0, 131075, 65545, 0, 65539, 65549, 0, 65539, 65570, 0, 196612, 65571, 0, 196610, 65572, 4, 196611, 65573, 0, 196608, 65574, 0, 196615, 65589, 0, 65539, 65593, 0, 65539, 131081, 0, 131075, 131085, 0, 131075, 131125, 0, 65539, 131129, 0, 65539, 196617, 4, 196608, 196618, 4, 196609, 196619, 4, 196609, 196620, 4, 196609, 196621, 4, 196610, 196661, 0, 65539, 196665, 0, 65539, 262197, 0, 65539, 262201, 0, 65539, 327733, 0, 65539, 327737, 0, 65539, 393269, 0, 65539, 393273, 0, 65539, 458805, 0, 196612, 458806, 0, 196610, 458807, 4, 196611, 458808, 0, 196608, 458809, 0, 196615 )
+tile_data = PoolIntArray( -655303, 0, 4, -655302, 0, 196609, -655301, 0, 196610, -589767, 0, 65539, -524231, 0, 65539, -458695, 0, 65539, -393167, 0, 4, -393166, 0, 196609, -393165, 0, 196609, -393164, 0, 196610, -393163, 4, 196611, -393159, 0, 65539, -327636, 4, 196611, -327635, 6, 0, -327634, 6, 0, -327633, 6, 0, -327632, 6, 0, -327631, 0, 65539, -327627, 0, 3, -327623, 0, 65539, -196612, 0, 3, -262095, 0, 65539, -262091, 0, 65539, -262087, 0, 65539, -131076, 0, 65539, -196589, 5, 196611, -196587, 0, 4, -196586, 0, 196609, -196585, 0, 196609, -196584, 0, 196609, -196583, 0, 196609, -196582, 0, 7, -196581, 6, 0, -196580, 6, 0, -196579, 6, 0, -196578, 0, 3, -196570, 0, 4, -196569, 0, 196609, -196568, 0, 196609, -196567, 0, 196609, -196566, 0, 196609, -196565, 0, 7, -196559, 0, 65539, -196555, 0, 65539, -196551, 0, 65539, -65540, 0, 65539, -131055, 5, 196611, -131051, 0, 65539, -131046, 0, 65539, -131042, 0, 65539, -131034, 0, 65539, -131029, 0, 131075, -131028, 4, 196611, -131024, 4, 196611, -131023, 0, 65539, -131019, 0, 65539, -131015, 0, 65539, -4, 0, 65539, -65515, 0, 65539, -65510, 0, 131075, -65509, 3, 196611, -65508, 4, 196611, -65507, 3, 196611, -65506, 0, 196612, -65505, 0, 196609, -65504, 0, 196609, -65503, 0, 196610, -65502, 4, 196611, -65501, 6, 0, -65500, 6, 0, -65499, 6, 0, -65498, 0, 65539, -65492, 3, 196608, -65491, 3, 196609, -65490, 3, 196609, -65489, 3, 196609, -65488, 3, 196610, -65487, 0, 131075, -65483, 0, 65539, -65479, 0, 65539, 65532, 0, 196612, 65533, 0, 196609, 65534, 0, 196609, 65535, 0, 196609, 0, 0, 196609, 1, 0, 196609, 2, 0, 196610, 3, 4, 196611, 7, 0, 4, 8, 0, 196609, 9, 0, 7, 13, 0, 4, 14, 0, 196609, 15, 0, 196609, 16, 0, 196610, 17, 3, 196608, 18, 3, 196609, 19, 3, 196609, 20, 3, 196610, 21, 0, 131075, 34, 0, 3, 38, 0, 65539, 53, 0, 65539, 57, 0, 65539, 65539, 0, 196611, 65540, 3, 196608, 65541, 3, 196609, 65542, 3, 196610, 65543, 0, 131075, 65545, 0, 65539, 65549, 0, 65539, 65570, 0, 196612, 65571, 0, 196610, 65572, 4, 196611, 65573, 0, 196608, 65574, 0, 196615, 65589, 0, 65539, 65593, 0, 65539, 131081, 0, 131075, 131085, 0, 131075, 131125, 0, 65539, 131129, 0, 65539, 196617, 4, 196608, 196618, 4, 196609, 196619, 4, 196609, 196620, 4, 196609, 196621, 4, 196610, 196661, 0, 65539, 196665, 0, 65539, 262197, 0, 65539, 262201, 0, 65539, 327733, 0, 65539, 327737, 0, 65539, 393269, 0, 65539, 393273, 0, 65539, 458805, 0, 196612, 458806, 0, 196610, 458807, 4, 196611, 458808, 0, 196608, 458809, 0, 196615 )
 
 [node name="StartingPoint" parent="Tiles/CollisionTiles" index="0" instance=ExtResource( 8 )]
 position = Vector2( 1648, -208 )
@@ -139,23 +182,40 @@ method_call_mode = 1
 anims/RESET = SubResource( 1 )
 anims/fade_in = SubResource( 2 )
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="7"]
+[node name="Label3" type="Label" parent="." index="7"]
+margin_left = 104.0
+margin_top = -88.0
+margin_right = 250.0
+margin_bottom = -57.0
+text = "press E to change hat
+press T to plant
+press R to restart"
+align = 1
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Label3" index="0"]
+autoplay = "fade_in"
+method_call_mode = 1
+anims/RESET = SubResource( 4 )
+anims/fade_in = SubResource( 5 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="8"]
 stream = ExtResource( 3 )
 autoplay = true
 
-[node name="StartingPoint3" parent="." index="8" instance=ExtResource( 8 )]
+[node name="StartingPoint3" parent="." index="9" instance=ExtResource( 8 )]
 position = Vector2( 768, -112 )
 
-[node name="StartingPoint4" parent="." index="9" instance=ExtResource( 8 )]
+[node name="StartingPoint4" parent="." index="10" instance=ExtResource( 8 )]
 position = Vector2( 1344, -112 )
 
-[node name="FlowerCenter" parent="." index="10" instance=ExtResource( 9 )]
+[node name="FlowerCenter" parent="." index="11" instance=ExtResource( 9 )]
 position = Vector2( 1776, 224 )
 
 [node name="BouncyFlower" parent="FlowerCenter" index="0"]
 bouncyPower = 3
 
-[node name="FlowerCenter2" parent="." index="11" instance=ExtResource( 9 )]
+[node name="FlowerCenter2" parent="." index="12" instance=ExtResource( 9 )]
 position = Vector2( 1744, 224 )
 
 [node name="BouncyFlower" parent="FlowerCenter2" index="0"]
@@ -164,7 +224,7 @@ bouncyPower = 3
 [node name="CollisionShape2D" parent="FlowerCenter2/BouncyFlower/HitBoxs" index="0"]
 position = Vector2( 0, 0 )
 
-[node name="FlowerCenter3" parent="." index="12" instance=ExtResource( 9 )]
+[node name="FlowerCenter3" parent="." index="13" instance=ExtResource( 9 )]
 position = Vector2( 1808, 224 )
 
 [node name="BouncyFlower" parent="FlowerCenter3" index="0"]
