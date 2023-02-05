@@ -221,14 +221,24 @@ playing = true
 position = Vector2( 0, 14 )
 script = ExtResource( 4 )
 
+[node name="PlantTween" type="Tween" parent="SeedPlanter" index="0"]
+
 [node name="CanvasLayer" type="CanvasLayer" parent="." index="4"]
 
 [node name="RestartTransition" type="ColorRect" parent="CanvasLayer" index="0"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = -1249.0
-margin_top = -471.0
-margin_right = 956.0
-margin_bottom = 674.0
+margin_left = -1248.0
+margin_top = -496.0
+margin_right = 957.0
+margin_bottom = 649.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="Tween" type="Tween" parent="CanvasLayer/RestartTransition" index="0"]
+
+[node name="PlayerTween" type="Tween" parent="." index="5"]
+
+[node name="TweenTarget" type="Position2D" parent="." index="6"]
+position = Vector2( 0, 40 )
+
+[connection signal="tween_all_completed" from="SeedPlanter/PlantTween" to="." method="_on_PlantTween_tween_all_completed"]
+[connection signal="tween_all_completed" from="PlayerTween" to="SeedPlanter" method="_on_PlayerTween_tween_all_completed"]

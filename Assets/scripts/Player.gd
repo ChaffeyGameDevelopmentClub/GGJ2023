@@ -24,19 +24,23 @@ var _tile_snap = Vector2.ZERO
 var can_plant_seed := false
 var _has_friction := true
 var player_state = PlayerState.IDLE
+onready var player_tween := $PlayerTween
+onready var tween_target := $TweenTarget
 
 #Restart functions
 onready var TransitionTween = $CanvasLayer/RestartTransition/Tween
 onready var ColorTrans = $CanvasLayer/RestartTransition
 signal restart_player
 signal give_seed
+signal ready_to_spawn
 
 #Enumerated player states
 enum PlayerState {
 	IDLE,
 	WALKING,
 	JUMPING,
-	FALLING
+	FALLING,
+	PLANTING
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -55,65 +59,77 @@ func _on_player_killed() -> void:
 #handle input events
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_T and can_plant_seed:
+		if event.scancode == KEY_T and can_plant_seed and player_state != PlayerState.PLANTING:
+			bury()
 			seed_planter.plant_seed()
-			#lower_health(10)
 
 func _process(_delta):
-	if Player.is_dead():
-		_input_vector.x = 0
-		animated_sprite.set_animation("death")
-		return;
+	if player_state != PlayerState.PLANTING:
+		if Player.is_dead():
+			_input_vector.x = 0
+			animated_sprite.set_animation("death")
+			return;
 
-	match(player_state):
-		PlayerState.IDLE:
-			animated_sprite.set_animation("idle")
-		PlayerState.WALKING:
-			animated_sprite.set_animation("walking")
-		PlayerState.JUMPING:
-			animated_sprite.set_animation("jumping")
-		PlayerState.FALLING:
-			animated_sprite.set_animation("falling")
-		_:
-			pass
-			#animated_sprite.set_animations("idle")
+		match(player_state):
+			PlayerState.IDLE:
+				animated_sprite.set_animation("idle")
+			PlayerState.WALKING:
+				animated_sprite.set_animation("walking")
+			PlayerState.JUMPING:
+				animated_sprite.set_animation("jumping")
+			PlayerState.FALLING:
+				animated_sprite.set_animation("falling")
+			_:
+				pass
+				#animated_sprite.set_animations("idle")
 
-	if Input.is_action_just_pressed("CycleSeed"):
-		seed_planter.cycle_seed()
+		if Input.is_action_just_pressed("CycleSeed"):
+			seed_planter.cycle_seed()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	if not _has_friction:
-		_velocity.x = 0
-	_velocity.x += _input_vector.x*speed
-	_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
+	if player_state != PlayerState.PLANTING:
+		if not _has_friction:
+			_velocity.x = 0
+		_velocity.x += _input_vector.x*speed
+		_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
 
-	#_velocity = 
-	_velocity = move_and_slide(_velocity, Vector2.UP)
-	_update_animation_state()
-	_handle_collisions()
+		#_velocity = 
+		_velocity = move_and_slide(_velocity, Vector2.UP)
+		_update_animation_state()
+		_handle_collisions()
 
-	_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
-	_input_vector = _input_vector.normalized()
-	if _velocity.y > 0:
-		_velocity +=  Vector2.UP * (fallMultiplier) * (-9.81)  
-	elif Input.is_action_just_released("ui_select") and _velocity.y < 0:
-		_velocity += Vector2.UP * (-9.81) * (lowJumpMultiplier)
-	if is_on_floor():
-		if Input.is_action_just_pressed("ui_accept"):
-			_velocity = Vector2.UP * jumpVelocity
-	
-	if Input.is_action_just_pressed("Restart"): 
-		_restart()
+		_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		_input_vector = _input_vector.normalized()
+		if _velocity.y > 0:
+			_velocity +=  Vector2.UP * (fallMultiplier) * (-9.81)  
+		elif Input.is_action_just_released("ui_select") and _velocity.y < 0:
+			_velocity += Vector2.UP * (-9.81) * (lowJumpMultiplier)
+		if is_on_floor():
+			if Input.is_action_just_pressed("ui_accept"):
+				_velocity = Vector2.UP * jumpVelocity
 		
+		if Input.is_action_just_pressed("Restart"): 
+			_restart()
+			
+			
+		_velocity.y += gravity
 		
-	_velocity.y += gravity
-	
-	var was_grounded = is_grounded
-	is_grounded = is_on_floor()
-	
-	if was_grounded == null || is_grounded != was_grounded:
-		emit_signal("grounded_updated", is_grounded)
+		var was_grounded = is_grounded
+		is_grounded = is_on_floor()
+		
+		if was_grounded == null || is_grounded != was_grounded:
+			emit_signal("grounded_updated", is_grounded)
+
+func bury():
+	if seed_planter.plant_occupies_tile():
+		return
+
+	if seed_planter.seed_power.get_value() > 0 and can_plant_seed and player_state != PlayerState.PLANTING: 
+		player_state = PlayerState.PLANTING
+		player_tween.interpolate_property(Player, "position", Player.global_position, tween_target.global_position, 0.5, Tween.TRANS_LINEAR)
+		player_tween.interpolate_property(Player, "scale", Player.scale, Vector2(0.1, 0.1), 0.5, Tween.TRANS_LINEAR)
+		player_tween.start()
 
 func _restart():
 	TransitionTween.interpolate_property(ColorTrans, "modulate:a", 0,1,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
@@ -176,3 +192,8 @@ func update_tile_snap(var pos : Vector2):
 	pos.x += 16 #adjust for half the width of a tile in pixels (16 px per tile)
 	_tile_snap = pos
 
+func get_tile_snap() -> Vector2:
+	return _tile_snap
+
+func _on_PlantTween_tween_all_completed():
+	emit_signal("ready_to_spawn")
