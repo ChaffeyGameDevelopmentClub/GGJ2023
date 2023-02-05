@@ -126,7 +126,7 @@ position = Vector2( 3853, -430 )
 
 [node name="AnimatedSprite" parent="." index="18" instance=ExtResource( 10 )]
 position = Vector2( 3355, -748 )
-frame = 2
+frame = 3
 
 [editable path="Tiles"]
 [editable path="EndingPoint"]
