@@ -12,6 +12,7 @@ onready var hurt_box = $Hurtbox
 onready var collider_1 = $CollisionShape2D
 onready var collider_2 = $CollisionShape2D2
 onready var sprite = $AnimatedSprite
+onready var death = $AudioStreamPlayer2D
 
 var dead := false
 
@@ -35,6 +36,7 @@ func _physics_process(delta):
 
 func _on_Hurtbox_body_entered(body:Node):
 	if body == Player:
+		death.play()
 		self.visible = false
 		dead = true
 

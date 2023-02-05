@@ -11,6 +11,7 @@ onready var checkpoint := $StartingPoint
 onready var a2d = $EndingPoint/Area2D
 var start_time := 0.0
 var level_state = LevelState.NOT_STARTED
+export (NodePath) onready var music_player = get_node(music_player)
 
 #Where the player must go to complete the level
 onready var ending_point = $EndingPoint
@@ -34,6 +35,7 @@ func _ready():
 	Player.connect("restart_player", self, "_level_restart")
 	Player.connect("ready_to_spawn", self, "_setup_player_drop")
 	Player.connect("on_checkpoint", self, "_set_active_checkpoint")
+	Player.connect("stop_music", self, "_stop_music")
 	
 	if start_on_load:
 		start_level()
@@ -103,6 +105,9 @@ func _on_Area2D_body_entered(body:Node):
 		Levels.start_next_level()
 		print("level %s completed"  % level_name)
 		
+func _stop_music():
+	music_player.stop()
+
 func _process(delta):
 	if Input.is_action_just_pressed("Born") and level_state == LevelState.NOT_STARTED:
 		start_level()

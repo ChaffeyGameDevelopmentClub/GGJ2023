@@ -8,13 +8,14 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
+	Player.label.visible = false
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	Player.position = Vector2(0, 0)
 	if Input.is_action_just_pressed("start"):
+		Player.label.visible = true
 		Player.camera.current = true
 		Player.position = Vector2(50, 0)
 		Player.camera.position = Player.position

@@ -1,4 +1,4 @@
-[gd_scene load_steps=141 format=2]
+[gd_scene load_steps=148 format=2]
 
 [ext_resource path="res://Assets/scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2_shroom.png" type="Texture" id=2]
@@ -21,6 +21,9 @@
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_jumping_2_bridge.png" type="Texture" id=19]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2_bridge.png" type="Texture" id=20]
 [ext_resource path="res://Assets/sounds/music/death.wav" type="AudioStream" id=21]
+[ext_resource path="res://Assets/sounds/jump.wav" type="AudioStream" id=22]
+[ext_resource path="res://Assets/Textures/player/Lil_Guy_jumping_.png" type="Texture" id=23]
+[ext_resource path="res://Assets/sounds/music/theme3fanfare.mp3" type="AudioStream" id=24]
 
 [sub_resource type="RectangleShape2D" id=48]
 extents = Vector2( 7, 14 )
@@ -218,6 +221,22 @@ animations = [ {
 "speed": 10.0
 } ]
 
+[sub_resource type="AtlasTexture" id=164]
+atlas = ExtResource( 23 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=165]
+atlas = ExtResource( 23 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=166]
+atlas = ExtResource( 23 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=167]
+atlas = ExtResource( 23 )
+region = Rect2( 96, 0, 32, 32 )
+
 [sub_resource type="AtlasTexture" id=86]
 atlas = ExtResource( 16 )
 region = Rect2( 0, 0, 32, 32 )
@@ -344,6 +363,11 @@ region = Rect2( 224, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=117]
 animations = [ {
+"frames": [ SubResource( 164 ), SubResource( 165 ), SubResource( 166 ), SubResource( 167 ) ],
+"loop": true,
+"name": "dance",
+"speed": 5.0
+}, {
 "frames": [ SubResource( 86 ), SubResource( 87 ), SubResource( 88 ), SubResource( 89 ), SubResource( 90 ), SubResource( 91 ), SubResource( 92 ), SubResource( 93 ), SubResource( 94 ), SubResource( 95 ), SubResource( 96 ), SubResource( 97 ), SubResource( 98 ), SubResource( 99 ), SubResource( 100 ), SubResource( 101 ) ],
 "loop": false,
 "name": "death",
@@ -636,6 +660,14 @@ script = ExtResource( 5 )
 
 [node name="ShiftTween" type="Tween" parent="Camera2D" index="0"]
 
+[node name="CanvasLayer2" type="CanvasLayer" parent="Camera2D" index="1"]
+
+[node name="Label" type="Label" parent="Camera2D/CanvasLayer2" index="0"]
+margin_top = 344.0
+margin_right = 40.0
+margin_bottom = 358.0
+text = "III"
+
 [node name="CollisionShape2D" parent="." index="1"]
 shape = SubResource( 48 )
 
@@ -649,8 +681,7 @@ playing = true
 
 [node name="LeafSprite" type="AnimatedSprite" parent="." index="3"]
 frames = SubResource( 117 )
-animation = "walking"
-frame = 3
+animation = "dance"
 playing = true
 __meta__ = {
 "_aseprite_wizard_config_": {
@@ -668,7 +699,7 @@ __meta__ = {
 visible = false
 frames = SubResource( 163 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 __meta__ = {
 "_aseprite_wizard_config_": {
@@ -686,7 +717,7 @@ __meta__ = {
 visible = false
 frames = SubResource( 125 )
 animation = "idle"
-frame = 2
+frame = 1
 playing = true
 __meta__ = {
 "_aseprite_wizard_config_": {
@@ -710,10 +741,10 @@ script = ExtResource( 4 )
 
 [node name="RestartTransition" type="ColorRect" parent="CanvasLayer" index="0"]
 modulate = Color( 1, 1, 1, 0 )
-margin_left = -960.0
-margin_top = -512.0
-margin_right = 1245.0
-margin_bottom = 633.0
+margin_left = -1160.0
+margin_top = -416.0
+margin_right = 1045.0
+margin_bottom = 729.0
 color = Color( 0, 0, 0, 1 )
 
 [node name="Tween" type="Tween" parent="CanvasLayer/RestartTransition" index="0"]
@@ -736,6 +767,12 @@ volume_db = 10.182
 
 [node name="Death" type="AudioStreamPlayer2D" parent="." index="13"]
 stream = ExtResource( 21 )
+
+[node name="Jump" type="AudioStreamPlayer2D" parent="." index="14"]
+stream = ExtResource( 22 )
+
+[node name="Victory" type="AudioStreamPlayer" parent="." index="15"]
+stream = ExtResource( 24 )
 
 [connection signal="tween_all_completed" from="SeedPlanter/PlantTween" to="." method="_on_PlantTween_tween_all_completed"]
 [connection signal="tween_all_completed" from="PlayerTween" to="SeedPlanter" method="_on_PlayerTween_tween_all_completed"]

@@ -100,6 +100,7 @@ tracks/0/keys = {
 }
 
 [node name="LevelBase" instance=ExtResource( 2 )]
+music_player = NodePath("AudioStreamPlayer")
 
 [node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
 motion_scale = Vector2( 0.1, 0 )

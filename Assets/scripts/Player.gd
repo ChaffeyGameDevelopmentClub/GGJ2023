@@ -10,7 +10,7 @@ export var fallMultiplier := 2
 export var lowJumpMultiplier := 10
 export var jumpVelocity := 400
 export var jump_vector := Vector2(0, -300)
-const _max_velocity = 130
+const _max_velocity = 150
 var is_jumping = false
 var is_grounded
 var _velocity := Vector2.ZERO
@@ -28,10 +28,15 @@ var player_state = PlayerState.IDLE
 onready var player_tween := $PlayerTween
 onready var tween_target := $TweenTarget
 
+onready var victory = $Victory
+
+onready var label = $Camera2D/CanvasLayer2/Label
+
 onready var no_place = $NoPlace
 onready var walk = $Walk
 onready var plant = $Plant
 onready var death = $Death
+onready var jump = $Jump
 
 onready var leafsprite = $LeafSprite
 onready var bridgesprite = $BridgeSprite
@@ -46,6 +51,7 @@ signal restart_player
 signal give_seed
 signal ready_to_spawn
 signal on_checkpoint
+signal stop_music
 
 var sprite_list = []
 var sprite_index = 0
@@ -74,14 +80,13 @@ func _ready():
 
 # Called when the player is killed.	
 func _on_player_killed() -> void:
-	death.play()
 	_restart()
 	print("Game OVER!")
 
 #handle input events
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.scancode == KEY_T and can_plant_seed and player_state != PlayerState.PLANTING:
+		if event.scancode == KEY_T and can_plant_seed and player_state != PlayerState.PLANTING and not Player.is_dead():
 			if seed_planter.get_seed_model() is BridgeSeed:
 				if can_plant_right():
 					var new_snap = tile_map.world_to_map(_tile_snap)
@@ -136,6 +141,16 @@ func _process(_delta):
 		if Input.is_action_just_pressed("Remove"):
 			_remove()
 
+	match(seed_planter.seed_power.get_value()):
+		3:
+			label.text = "III"
+		2:
+			label.text = "II"
+		1:
+			label.text = "I"
+		_:
+			label.text = ""
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	if player_state != PlayerState.PLANTING:
@@ -165,9 +180,10 @@ func _physics_process(_delta):
 			_velocity += Vector2.UP * (-9.81) * (lowJumpMultiplier)
 		if is_on_floor():
 			if Input.is_action_just_pressed("ui_accept"):
+				jump.play()
 				_velocity = Vector2.UP * jumpVelocity
 		
-		if Input.is_action_just_pressed("Restart"): 
+		if Input.is_action_just_pressed("Restart") and not Player.is_dead() and ColorTrans.modulate.a == 0: 
 			_restart()
 			
 			
@@ -194,6 +210,9 @@ func bury():
 		player_tween.start()
 
 func _restart():
+	death.play()
+	Player._has_died = true
+	Player.health.set_value(0)
 	TransitionTween.interpolate_property(ColorTrans, "modulate:a", 0,1,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
 	TransitionTween.start()
 	yield(TransitionTween, "tween_completed")
@@ -319,3 +338,13 @@ func _on_checkpoint(checkpoint):
 func _remove():
 	seed_planter.get_plant_on_tile().queue_free()
 	seed_planter.seed_power.set_value(seed_planter.seed_power.get_value() + 1)
+
+func complete_game():
+	leafsprite.visible = true
+	bridgesprite.visible = false
+	shroomsprite.visible = false
+	leafsprite.set_animation("dance")
+	player_state = PlayerState.PLANTING
+	walk.stop()
+	victory.play()
+	emit_signal("stop_music")

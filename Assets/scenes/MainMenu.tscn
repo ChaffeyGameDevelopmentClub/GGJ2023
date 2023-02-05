@@ -68,8 +68,9 @@ current = true
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
 position = Vector2( 320, 185 )
 scale = Vector2( 3.33333, 3.38889 )
+z_index = 2
 frames = SubResource( 12 )
-frame = 2
+frame = 1
 playing = true
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
