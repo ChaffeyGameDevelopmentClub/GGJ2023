@@ -34,6 +34,7 @@ onready var ColorTrans = $CanvasLayer/RestartTransition
 signal restart_player
 signal give_seed
 signal ready_to_spawn
+signal on_checkpoint
 
 #Enumerated player states
 enum PlayerState {
@@ -251,3 +252,6 @@ func get_tile_snap() -> Vector2:
 
 func _on_PlantTween_tween_all_completed():
 	emit_signal("ready_to_spawn")
+
+func _on_checkpoint(checkpoint):
+	emit_signal("on_checkpoint", checkpoint)

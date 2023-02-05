@@ -7,11 +7,10 @@ class_name LevelBase
 
 export var level_name := ""
 export var start_on_load := false
+onready var checkpoint := $StartingPoint
 var start_time := 0.0
 var level_state = LevelState.NOT_STARTED
 
-#Where the player spawns
-onready var starting_point = $StartingPoint
 #Where the player must go to complete the level
 onready var ending_point = $EndingPoint
 
@@ -29,12 +28,23 @@ func _ready():
 	self.connect("on_level_started", self, "_on_level_started")
 	Player.connect("restart_player", self, "_level_restart")
 	Player.connect("ready_to_spawn", self, "_setup_player_drop")
-	if start_on_load:
-		start_level()
+	Player.connect("on_checkpoint", self, "_set_active_checkpoint")
+
+	start_level()
 
 #Start the level
 func start_level():
 	emit_signal("on_level_started")
+	_set_active_checkpoint(checkpoint)
+	
+
+func _set_active_checkpoint(_checkpoint):
+	if _checkpoint.active == false:
+		_checkpoint.start_glow()
+		_checkpoint.active = true
+		Player.seed_planter.seed_replenish()
+		checkpoint = _checkpoint
+
 
 #Get time elapsed from the start of the level
 func get_time_elapsed() -> float:
@@ -44,7 +54,7 @@ func get_time_elapsed() -> float:
 		return 0.0
 
 func _setup_player_drop():
-	Player.position = starting_point.position
+	Player.position = checkpoint.position
 	Player.position.y -= 10
 	Player.scale = Vector2(0.1, 0.1)
 
@@ -55,11 +65,11 @@ func _setup_player_drop():
 
 #Function that executes whenever the level is started
 func _on_level_started():
-	Player.position = starting_point.position
+	Player.position = checkpoint.position
 	start_time = OS.get_system_time_msecs()
 
 func _level_restart():
-	Player.position = starting_point.position
+	Player.position = checkpoint.position
 	Player.revive()
 	for child in Player.get_children():
 		if child is SpawnablePlant:
