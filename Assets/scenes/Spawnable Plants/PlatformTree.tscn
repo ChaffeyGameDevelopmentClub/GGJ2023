@@ -6,6 +6,7 @@
 [node name="TreeCenter" type="StaticBody2D"]
 z_index = -1
 script = ExtResource( 2 )
+id = 1
 
 [node name="Tree" type="Sprite" parent="."]
 position = Vector2( 0, -32 )

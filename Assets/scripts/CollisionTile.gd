@@ -17,6 +17,7 @@ const tile_dict := {
 	3: "lava",
 	4: "dirt",
 	5: "ice",
+	6: "web",
 }
 
 const plantable_dict := {
@@ -26,6 +27,7 @@ const plantable_dict := {
 	3: false,
 	4: true,
 	5: false,
+	6: false,
 }
 
 const tile_damage_dict := {
@@ -35,6 +37,7 @@ const tile_damage_dict := {
 	3: 100,
 	4: 0,
 	5: 0,
+	6: 0
 }
 
 const friction_dict := {
@@ -44,7 +47,11 @@ const friction_dict := {
 	3: true,
 	4: true,
 	5: false,
+	6: true,
 }
+
+func _ready():
+	Player.tile_map = self
 
 #returns the name of a tile at a given position
 func get_tile_name(pos : Vector2) -> String:
