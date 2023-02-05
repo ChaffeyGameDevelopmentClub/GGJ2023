@@ -57,7 +57,6 @@ tile_move_distance = 3
 [node name="AnimatedSprite" parent="." index="0"]
 scale = Vector2( 1, 1 )
 frames = SubResource( 10 )
-frame = 1
 playing = true
 
 [node name="Hitbox" type="Area2D" parent="." index="1"]

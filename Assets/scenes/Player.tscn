@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=2]
+[gd_scene load_steps=54 format=2]
 
 [ext_resource path="res://Assets/scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2.png" type="Texture" id=2]
@@ -8,6 +8,9 @@
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_jumping_2_.png" type="Texture" id=6]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_idle.png" type="Texture" id=7]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Dead.png" type="Texture" id=8]
+[ext_resource path="res://Assets/sounds/noplace1.mp3" type="AudioStream" id=9]
+[ext_resource path="res://Assets/sounds/walkreal2.wav" type="AudioStream" id=10]
+[ext_resource path="res://Assets/sounds/treeplant2.mp3" type="AudioStream" id=11]
 
 [sub_resource type="RectangleShape2D" id=48]
 extents = Vector2( 7, 14 )
@@ -279,6 +282,16 @@ __meta__ = {
 "source": "res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2_shroom.aseprite"
 }
 }
+
+[node name="NoPlace" type="AudioStreamPlayer2D" parent="." index="8"]
+stream = ExtResource( 9 )
+
+[node name="Walk" type="AudioStreamPlayer2D" parent="." index="9"]
+stream = ExtResource( 10 )
+volume_db = -11.381
+
+[node name="Plant" type="AudioStreamPlayer2D" parent="." index="10"]
+stream = ExtResource( 11 )
 
 [connection signal="tween_all_completed" from="SeedPlanter/PlantTween" to="." method="_on_PlantTween_tween_all_completed"]
 [connection signal="tween_all_completed" from="PlayerTween" to="SeedPlanter" method="_on_PlayerTween_tween_all_completed"]

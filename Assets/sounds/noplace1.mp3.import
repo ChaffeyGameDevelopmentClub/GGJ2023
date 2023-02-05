@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/noplace1.mp3-f584359d135a38e4fb2adae243480248.mp3str"
+
+[deps]
+
+source_file="res://Assets/sounds/noplace1.mp3"
+dest_files=[ "res://.import/noplace1.mp3-f584359d135a38e4fb2adae243480248.mp3str" ]
+
+[params]
+
+loop=false
+loop_offset=0

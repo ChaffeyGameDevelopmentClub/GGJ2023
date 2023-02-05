@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/treeplant3.mp3-def53eda9826c5602efda74bfedb9fc3.mp3str"
+
+[deps]
+
+source_file="res://Assets/sounds/treeplant3.mp3"
+dest_files=[ "res://.import/treeplant3.mp3-def53eda9826c5602efda74bfedb9fc3.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -28,6 +28,10 @@ var player_state = PlayerState.IDLE
 onready var player_tween := $PlayerTween
 onready var tween_target := $TweenTarget
 
+onready var no_place = $NoPlace
+onready var walk = $Walk
+onready var plant = $Plant
+
 #Restart functions
 onready var TransitionTween = $CanvasLayer/RestartTransition/Tween
 onready var ColorTrans = $CanvasLayer/RestartTransition
@@ -75,6 +79,7 @@ func _input(event):
 					_tile_snap = new_snap
 
 				else:
+					no_place.play()
 					return
 			bury()
 			seed_planter.plant_seed()
@@ -113,12 +118,20 @@ func _physics_process(_delta):
 		_velocity.x += _input_vector.x*speed
 		_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
 
+		if player_state == PlayerState.WALKING and not walk.playing:
+			walk.play()
+		
+		if player_state != PlayerState.WALKING and walk.playing:
+			walk.stop()
+
+
 		#_velocity = 
 		_velocity = move_and_slide(_velocity, Vector2.UP)
 		_update_animation_state()
 		_handle_collisions()
 
 		_input_vector.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+		
 		_input_vector = _input_vector.normalized()
 		if _velocity.y > 0:
 			_velocity +=  Vector2.UP * (fallMultiplier) * (-9.81)  
@@ -142,10 +155,14 @@ func _physics_process(_delta):
 
 func bury():
 	if seed_planter.plant_occupies_tile():
+		no_place.play()
 		return
+	
 
 	if seed_planter.seed_power.get_value() > 0 and can_plant_seed and player_state != PlayerState.PLANTING: 
 		player_state = PlayerState.PLANTING
+		plant.play()
+		walk.stop()
 		player_tween.interpolate_property(Player, "position", Player.global_position, tween_target.global_position, 0.5, Tween.TRANS_LINEAR)
 		player_tween.interpolate_property(Player, "scale", Player.scale, Vector2(0.1, 0.1), 0.5, Tween.TRANS_LINEAR)
 		player_tween.start()

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Assets/Textures/sky4.png" type="Texture" id=1]
 [ext_resource path="res://Assets/scenes/levels/LevelBase.tscn" type="PackedScene" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Assets/Textures/sky3.png" type="Texture" id=4]
 [ext_resource path="res://Assets/Textures/sky1.png" type="Texture" id=5]
 [ext_resource path="res://Assets/Textures/sky2.png" type="Texture" id=6]
+[ext_resource path="res://Assets/sounds/music/theme1ground.wav" type="AudioStream" id=7]
 
 [node name="LevelBase" instance=ExtResource( 2 )]
 start_on_load = true
@@ -69,6 +70,9 @@ position = Vector2( 200, -120 )
 
 [node name="Aphid" parent="." index="5" instance=ExtResource( 3 )]
 position = Vector2( 152, -12 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="6"]
+stream = ExtResource( 7 )
 
 [editable path="Tiles"]
 [editable path="EndingPoint"]
