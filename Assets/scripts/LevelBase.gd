@@ -28,6 +28,7 @@ signal on_level_completed
 func _ready():
 	self.connect("on_level_started", self, "_on_level_started")
 	Player.connect("restart_player", self, "_level_restart")
+	Player.connect("ready_to_spawn", self, "_setup_player_drop")
 	if start_on_load:
 		start_level()
 
@@ -41,6 +42,16 @@ func get_time_elapsed() -> float:
 		return OS.get_system_time_msecs() - start_time
 	else: 
 		return 0.0
+
+func _setup_player_drop():
+	Player.position = starting_point.position
+	Player.position.y -= 10
+	Player.scale = Vector2(0.1, 0.1)
+
+	Player.player_state = Player.PlayerState.IDLE
+	Player.player_tween.interpolate_property(Player, "scale", Vector2(0.1, 0.1), Vector2(1, 1), 1, Tween.TRANS_LINEAR)
+	Player.player_tween.start()
+
 
 #Function that executes whenever the level is started
 func _on_level_started():

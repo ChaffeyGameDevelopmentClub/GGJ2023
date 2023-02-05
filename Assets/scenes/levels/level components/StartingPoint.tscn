@@ -1,3 +1,11 @@
-[gd_scene format=2]
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Assets/Textures/SpawnTree.png" type="Texture" id=1]
 
 [node name="StartingPoint" type="Position2D"]
+
+[node name="SpawnTree" type="Sprite" parent="."]
+position = Vector2( 16, -48 )
+scale = Vector2( 2, 2 )
+z_index = -1
+texture = ExtResource( 1 )
