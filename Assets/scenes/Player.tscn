@@ -1,4 +1,4 @@
-[gd_scene load_steps=46 format=2]
+[gd_scene load_steps=50 format=2]
 
 [ext_resource path="res://Assets/scripts/Player.gd" type="Script" id=1]
 [ext_resource path="res://Assets/Textures/player/Lil_Guy_Walking_Cycle_2.png" type="Texture" id=2]
@@ -92,9 +92,25 @@ region = Rect2( 288, 0, 32, 32 )
 atlas = ExtResource( 6 )
 region = Rect2( 320, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=49]
 atlas = ExtResource( 7 )
-region = Rect2( 160, 0, 32, 32 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=50]
+atlas = ExtResource( 7 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=51]
+atlas = ExtResource( 7 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=52]
+atlas = ExtResource( 7 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=53]
+atlas = ExtResource( 7 )
+region = Rect2( 128, 0, 32, 32 )
 
 [sub_resource type="AtlasTexture" id=25]
 atlas = ExtResource( 6 )
@@ -164,7 +180,7 @@ animations = [ {
 "name": "falling",
 "speed": 10.0
 }, {
-"frames": [ SubResource( 8 ) ],
+"frames": [ SubResource( 49 ), SubResource( 50 ), SubResource( 51 ), SubResource( 52 ), SubResource( 53 ) ],
 "loop": true,
 "name": "idle",
 "speed": 10.0
