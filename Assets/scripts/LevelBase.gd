@@ -8,6 +8,7 @@ class_name LevelBase
 export var level_name := ""
 export var start_on_load := false
 onready var checkpoint := $StartingPoint
+onready var a2d = $EndingPoint/Area2D
 var start_time := 0.0
 var level_state = LevelState.NOT_STARTED
 
@@ -76,8 +77,15 @@ func _level_restart():
 			child.queue_free()
 	Player.seed_planter.seed_replenish()
 
+var ended = false
 #When the player enters the ending point, the level is completed
 func _on_Area2D_body_entered(body:Node):
-	if body == Player:
+	if body == Player and level_state != LevelState.ENDED and not ended:
+		level_state = LevelState.ENDED
+		ended = true
+		_level_restart()
+		Player.position = Vector2.ZERO
 		emit_signal("on_level_completed")
+		Levels.start_next_level()
 		print("level %s completed"  % level_name)
+		

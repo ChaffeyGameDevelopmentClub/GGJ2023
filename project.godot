@@ -91,6 +91,7 @@ aseprite_executable_path="D:\\SteamLibrary\\steamapps\\common\\Aseprite\\Aseprit
 [autoload]
 
 Player="*res://Assets/scenes/Player.tscn"
+Levels="*res://Assets/scenes/Levels.tscn"
 
 [display]
 
