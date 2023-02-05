@@ -3,6 +3,7 @@ extends Position2D
 class_name StartingPoint
 onready var sprite = $SpawnTree
 onready var tween = $Tween
+onready var audio_player = $AudioStreamPlayer2D
 
 var active = false
 signal checkpoint_reached
@@ -18,4 +19,5 @@ func start_glow():
 	tween.interpolate_property(self.sprite, "modulate:r", 0, 255, 5, Tween.TRANS_LINEAR)
 	tween.interpolate_property(self.sprite, "modulate:g", 0, 255, 5, Tween.TRANS_LINEAR)
 	tween.interpolate_property(self.sprite, "modulate:b", 0, 255, 5, Tween.TRANS_LINEAR)
+	audio_player.play()
 	tween.start()

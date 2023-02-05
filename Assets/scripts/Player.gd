@@ -32,6 +32,11 @@ onready var no_place = $NoPlace
 onready var walk = $Walk
 onready var plant = $Plant
 
+onready var leafsprite = $LeafSprite
+onready var bridgesprite = $BridgeSprite
+onready var shroomsprite = $ShroomSprite
+onready var camera = $Camera2D
+
 #Restart functions
 onready var TransitionTween = $CanvasLayer/RestartTransition/Tween
 onready var ColorTrans = $CanvasLayer/RestartTransition
@@ -39,6 +44,9 @@ signal restart_player
 signal give_seed
 signal ready_to_spawn
 signal on_checkpoint
+
+var sprite_list = []
+var sprite_index = 0
 
 #Enumerated player states
 enum PlayerState {
@@ -56,6 +64,11 @@ func _ready():
 	seed_planter = get_node("SeedPlanter")
 	var model = PlatformTreeSeed.new()
 	seed_planter.set_seed_model(model)
+
+	sprite_list.append(leafsprite)
+	sprite_list.append(shroomsprite)
+	sprite_list.append(bridgesprite)
+
 
 # Called when the player is killed.	
 func _on_player_killed() -> void:
@@ -81,6 +94,11 @@ func _input(event):
 				else:
 					no_place.play()
 					return
+
+			elif seed_planter.get_seed_model() is PlatformTreeSeed:
+				if not can_plant_tree():
+					no_place.play()
+					return
 			bury()
 			seed_planter.plant_seed()
 
@@ -88,24 +106,29 @@ func _process(_delta):
 	if player_state != PlayerState.PLANTING:
 		if Player.is_dead():
 			_input_vector.x = 0
-			animated_sprite.set_animation("death")
+			sprite_list[sprite_index].set_animation("death")
 			return;
 
 		match(player_state):
 			PlayerState.IDLE:
-				animated_sprite.set_animation("idle")
+				sprite_list[sprite_index].set_animation("idle")
 			PlayerState.WALKING:
-				animated_sprite.set_animation("walking")
+				sprite_list[sprite_index].set_animation("walking")
 			PlayerState.JUMPING:
-				animated_sprite.set_animation("jumping")
+				sprite_list[sprite_index].set_animation("jumping")
 			PlayerState.FALLING:
-				animated_sprite.set_animation("falling")
+				sprite_list[sprite_index].set_animation("falling")
 			_:
 				pass
 				#animated_sprite.set_animations("idle")
 
 		if Input.is_action_just_pressed("CycleSeed"):
 			seed_planter.cycle_seed()
+			sprite_list[sprite_index].visible = false
+			sprite_index += 1
+			if sprite_index > 2:
+				sprite_index = 0
+			sprite_list[sprite_index].visible = true
 
 		if Input.is_action_just_pressed("Remove"):
 			_remove()
@@ -195,9 +218,9 @@ func _update_animation_state():
 	if abs(_velocity.x) > 0:
 		player_state = PlayerState.WALKING
 		if (_velocity.x > 0):
-			animated_sprite.flip_h = false
+			sprite_list[sprite_index].flip_h = false
 		else:
-			animated_sprite.flip_h = true
+			sprite_list[sprite_index].flip_h = true
 	else:
 		player_state = PlayerState.IDLE
 
@@ -260,6 +283,20 @@ func can_plant_left() -> bool:
 	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
 		return false
 	
+	return true
+
+func can_plant_tree() -> bool:
+	var snap_pos = Vector2(tile_map.world_to_map(_tile_snap))
+	snap_pos.y -= 1
+
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+	
+	snap_pos.y -= 1
+
+	if not tile_map.get_cell(snap_pos.x, snap_pos.y) == tile_map.INVALID_CELL:
+		return false
+
 	return true
 	
 

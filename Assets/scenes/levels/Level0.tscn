@@ -1,0 +1,132 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Assets/Textures/bg4.png" type="Texture" id=1]
+[ext_resource path="res://Assets/scenes/levels/LevelBase.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Assets/sounds/music/theme2undergroundloop.wav" type="AudioStream" id=3]
+[ext_resource path="res://Assets/Textures/bg1.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Textures/bg2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Textures/bg3.png" type="Texture" id=6]
+[ext_resource path="res://Assets/scenes/levels/SpaceBorn.gd" type="Script" id=7]
+
+[sub_resource type="Animation" id=1]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:self_modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:modulate")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "fade_in"
+length = 20.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 3, 20 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="LevelBase" instance=ExtResource( 2 )]
+start_on_load = true
+
+[node name="ParallaxLayer" type="ParallaxLayer" parent="ParallaxBackground" index="0"]
+motion_scale = Vector2( 0.1, 0 )
+motion_mirroring = Vector2( 640, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer" index="0"]
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1280, 360 )
+
+[node name="ParallaxLayer2" type="ParallaxLayer" parent="ParallaxBackground" index="1"]
+motion_scale = Vector2( 0.2, 0 )
+motion_mirroring = Vector2( 640, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer2" index="0"]
+texture = ExtResource( 5 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1280, 360 )
+
+[node name="ParallaxLayer3" type="ParallaxLayer" parent="ParallaxBackground" index="2"]
+motion_scale = Vector2( 0.4, 0 )
+motion_mirroring = Vector2( 640, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer3" index="0"]
+texture = ExtResource( 6 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1280, 360 )
+
+[node name="ParallaxLayer4" type="ParallaxLayer" parent="ParallaxBackground" index="3"]
+motion_scale = Vector2( 0.9, 0 )
+motion_mirroring = Vector2( 640, 0 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="ParallaxBackground/ParallaxLayer4" index="0"]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 1280, 360 )
+
+[node name="CollisionTiles" parent="Tiles" index="0"]
+tile_data = PoolIntArray( 65530, 0, 196608, 65531, 0, 196609, 65532, 0, 196609, 65533, 0, 196609, 65534, 0, 196609, 65535, 0, 196609, 0, 0, 196609, 1, 0, 196609, 2, 0, 196609, 3, 0, 196609, 4, 0, 196609, 5, 0, 196609, 6, 0, 196609, 7, 0, 196609, 8, 0, 196609, 9, 0, 196609, 10, 0, 196609, 11, 0, 196609, 12, 0, 196609, 13, 0, 196609, 14, 0, 196609, 15, 0, 196609, 16, 0, 196609, 17, 0, 196609, 18, 0, 196609, 19, 0, 196609, 20, 0, 196609, 21, 0, 196609, 22, 0, 196609, 23, 0, 196609, 24, 0, 196610 )
+
+[node name="StartingPoint" parent="." index="2"]
+position = Vector2( 16, -16 )
+
+[node name="EndingPoint" parent="." index="3"]
+position = Vector2( 200, -120 )
+
+[node name="Label" type="Label" parent="." index="5"]
+margin_left = -56.0
+margin_top = -112.0
+margin_right = 90.0
+margin_bottom = -98.0
+text = "press space to be born"
+script = ExtResource( 7 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Label" index="0"]
+autoplay = "fade_in"
+method_call_mode = 1
+anims/RESET = SubResource( 1 )
+anims/fade_in = SubResource( 2 )
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." index="6"]
+stream = ExtResource( 3 )
+
+[editable path="Tiles"]
+[editable path="EndingPoint"]

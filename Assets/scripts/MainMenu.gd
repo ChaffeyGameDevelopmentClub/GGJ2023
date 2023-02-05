@@ -12,9 +12,12 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
-
-func _on_Quit_button_down():
-	get_tree().quit()
+func _process(delta):
+	Player.position = Vector2(0, 0)
+	if Input.is_action_just_pressed("start"):
+		Player.camera.current = true
+		Player.position = Vector2(50, 0)
+		Player.camera.position = Player.position
+		#Player.position = Vector2.ZERO
+		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		get_tree().change_scene("res://Assets/scenes/levels/Level1.tscn")

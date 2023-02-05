@@ -18,6 +18,7 @@ const tile_dict := {
 	4: "dirt",
 	5: "ice",
 	6: "web",
+	7: "wood",
 }
 
 const plantable_dict := {
@@ -28,6 +29,7 @@ const plantable_dict := {
 	4: true,
 	5: false,
 	6: false,
+	7: false,
 }
 
 const tile_damage_dict := {
@@ -37,7 +39,8 @@ const tile_damage_dict := {
 	3: 100,
 	4: 0,
 	5: 0,
-	6: 0
+	6: 0,
+	7: 0,
 }
 
 const friction_dict := {
@@ -48,6 +51,7 @@ const friction_dict := {
 	4: true,
 	5: false,
 	6: true,
+	7: true,
 }
 
 func _ready():
