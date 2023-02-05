@@ -89,7 +89,7 @@ func _process(_delta):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	if player_state != PlayerState.PLANTING:
-		if not _has_friction:
+		if _has_friction:
 			_velocity.x = 0
 		_velocity.x += _input_vector.x*speed
 		_velocity.x = clamp(_velocity.x, -_max_velocity, _max_velocity)
@@ -145,6 +145,7 @@ func _handle_collisions():
 		_collision = get_slide_collision(i)
 		_check_ground_to_plant(_collision)
 		_check_block_damage(_collision)
+		_check_friction(_collision)
 	if not is_on_floor():
 			can_plant_seed = false
 
@@ -170,13 +171,15 @@ func _check_ground_to_plant(collision : KinematicCollision2D) -> void:
 	if collision != null:
 		if collision.collider is CollisionTile:
 			if is_on_floor():
-				collision.collider
-				_has_friction = (collision.collider.frictionless_dict[collision.collider.get_tile_id(collision.position)])
 				can_plant_seed = ( collision.collider.plantable_dict[collision.collider.get_tile_id(collision.position)])
-				return
-			else:
-				_has_friction = true
-	
+				
+func _check_friction(collision : KinematicCollision2D):
+	if collision != null:
+		if collision.collider is SpawnablePlant:
+			_has_friction = true	
+			print(_has_friction)
+		elif collision.collider is CollisionTile:
+			_has_friction = (collision.collider.friction_dict[collision.collider.get_tile_id(collision.position)])
 
 #Checks the damage of the given block that was collided with, and returns it
 func _check_block_damage(collision : KinematicCollision2D) -> void:

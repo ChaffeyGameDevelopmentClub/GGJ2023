@@ -37,13 +37,13 @@ const tile_damage_dict := {
 	5: 0,
 }
 
-const frictionless_dict := {
-	-1: false,
-	0: false,
-	2: false,
-	3: false,
-	4: false,
-	5: true,
+const friction_dict := {
+	-1: true,
+	0: true,
+	2: true,
+	3: true,
+	4: true,
+	5: false,
 }
 
 #returns the name of a tile at a given position
