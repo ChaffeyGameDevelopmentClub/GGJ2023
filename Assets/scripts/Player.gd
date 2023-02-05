@@ -102,6 +102,9 @@ func _process(_delta):
 		if Input.is_action_just_pressed("CycleSeed"):
 			seed_planter.cycle_seed()
 
+		if Input.is_action_just_pressed("Remove"):
+			_remove()
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
 	if player_state != PlayerState.PLANTING:
@@ -255,3 +258,7 @@ func _on_PlantTween_tween_all_completed():
 
 func _on_checkpoint(checkpoint):
 	emit_signal("on_checkpoint", checkpoint)
+
+func _remove():
+	seed_planter.get_plant_on_tile().queue_free()
+	seed_planter.seed_power.set_value(seed_planter.seed_power.get_value() + 1)

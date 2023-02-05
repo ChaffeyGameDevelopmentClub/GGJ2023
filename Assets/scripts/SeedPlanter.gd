@@ -94,6 +94,13 @@ func plant_occupies_tile() -> bool:
 				return true
 	return false
 
+func get_plant_on_tile():
+	for child in Player.get_children():
+		if child is SpawnablePlant:
+			if child.position == Player.get_tile_snap():
+				return child
+	return null
+
 
 func _on_PlayerTween_tween_all_completed():
 	if Player.player_state == Player.PlayerState.PLANTING:
