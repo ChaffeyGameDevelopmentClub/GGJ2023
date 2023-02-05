@@ -26,25 +26,36 @@ signal on_level_started
 signal on_level_completed
 
 func _ready():
+	Player.player_state = Player.PlayerState.PLANTING
+	Player.visible = false
+	Player.scale = Vector2(0.1, 0.1)
+
 	self.connect("on_level_started", self, "_on_level_started")
 	Player.connect("restart_player", self, "_level_restart")
 	Player.connect("ready_to_spawn", self, "_setup_player_drop")
 	Player.connect("on_checkpoint", self, "_set_active_checkpoint")
-
-	start_level()
+	
+	if start_on_load:
+		start_level()
 
 #Start the level
 func start_level():
 	emit_signal("on_level_started")
+	Player.player_state = Player.PlayerState.IDLE
 	_set_active_checkpoint(checkpoint)
+	level_state = LevelState.STARTED
+	
+	Player.visible = true
+	_setup_player_drop()
 	
 
 func _set_active_checkpoint(_checkpoint):
-	if _checkpoint.active == false:
-		_checkpoint.start_glow()
-		_checkpoint.active = true
-		Player.seed_planter.seed_replenish()
-		checkpoint = _checkpoint
+	if 	Player.player_state != Player.PlayerState.PLANTING:
+		if _checkpoint.active == false:
+			_checkpoint.start_glow()
+			_checkpoint.active = true
+			Player.seed_planter.seed_replenish()
+			checkpoint = _checkpoint
 
 
 #Get time elapsed from the start of the level
@@ -56,7 +67,7 @@ func get_time_elapsed() -> float:
 
 func _setup_player_drop():
 	Player.position = checkpoint.position
-	Player.position.y -= 10
+	Player.position.y -= 50
 	Player.scale = Vector2(0.1, 0.1)
 
 	Player.player_state = Player.PlayerState.IDLE
@@ -89,3 +100,6 @@ func _on_Area2D_body_entered(body:Node):
 		Levels.start_next_level()
 		print("level %s completed"  % level_name)
 		
+func _process(delta):
+	if Input.is_action_just_pressed("Born") and level_state == LevelState.NOT_STARTED:
+		start_level()
