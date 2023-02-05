@@ -1,8 +1,57 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=15 format=2]
 
-[ext_resource path="res://Assets/Textures/mushroom.png" type="Texture" id=1]
+[ext_resource path="res://Assets/Textures/Lil_Shroom_Funni.png" type="Texture" id=1]
 [ext_resource path="res://Assets/scripts/BouncyFlower.gd" type="Script" id=2]
 [ext_resource path="res://Assets/scripts/SpawnablePlant.gd" type="Script" id=3]
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 1 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 1 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 1 )
+region = Rect2( 224, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=11]
+animations = [ {
+"frames": [ SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": false,
+"name": "bounce",
+"speed": 50.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 15, 11.5 )
@@ -11,9 +60,11 @@ extents = Vector2( 15, 11.5 )
 script = ExtResource( 3 )
 id = 2
 
-[node name="BouncyFlower" type="Sprite" parent="."]
+[node name="BouncyFlower" type="AnimatedSprite" parent="."]
 position = Vector2( 0, -16 )
-texture = ExtResource( 1 )
+frames = SubResource( 11 )
+animation = "idle"
+playing = true
 script = ExtResource( 2 )
 
 [node name="HitBoxs" type="Area2D" parent="BouncyFlower"]
@@ -22,4 +73,5 @@ script = ExtResource( 2 )
 position = Vector2( 0, -1.5 )
 shape = SubResource( 1 )
 
+[connection signal="animation_finished" from="BouncyFlower" to="BouncyFlower" method="_on_BouncyFlower_animation_finished"]
 [connection signal="body_shape_entered" from="BouncyFlower/HitBoxs" to="BouncyFlower" method="_on_HitBoxs_body_shape_entered"]

@@ -83,7 +83,7 @@ func plant_seed() -> void:
 	
 	seed_power.lower_value(_seed_model.seed_power_cost)
 
-func _seed_replenish():
+func seed_replenish():
 	seed_power.set_value(_max_seed_power)
 
 func plant_occupies_tile() -> bool:

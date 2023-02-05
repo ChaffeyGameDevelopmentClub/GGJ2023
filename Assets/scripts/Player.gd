@@ -151,7 +151,6 @@ func _restart():
 	TransitionTween.start()
 	yield(TransitionTween, "tween_completed")
 	emit_signal("restart_player")
-	emit_signal("give_seed")
 	TransitionTween.interpolate_property(ColorTrans, "modulate:a", 1,0,1, Tween.TRANS_LINEAR ,Tween.EASE_IN)
 	TransitionTween.start()
 		

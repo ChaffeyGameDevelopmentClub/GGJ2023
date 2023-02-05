@@ -61,6 +61,10 @@ func _on_level_started():
 func _level_restart():
 	Player.position = starting_point.position
 	Player.revive()
+	for child in Player.get_children():
+		if child is SpawnablePlant:
+			child.queue_free()
+	Player.seed_planter.seed_replenish()
 
 #When the player enters the ending point, the level is completed
 func _on_Area2D_body_entered(body:Node):
